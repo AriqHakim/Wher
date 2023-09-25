@@ -1,0 +1,555 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: http://localhost:3031
+tags:
+  - name: auth
+    description: Autentikasi dan akun
+  - name: profile
+    description: Halaman profil
+  - name: friends
+    description: Fitur pertemanan
+  - name: location
+    description: Fitur sharing lokasi
+paths:
+  /login:
+    post:
+      summary: "#1 As User, I can Login"
+      tags: 
+        - auth
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: "Login success"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /register:
+    post:
+      summary: "#2 As User, I can Register"
+      tags: 
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+                name:
+                  type: string
+                password:
+                  type: string
+                confirmPassword:
+                  type: string
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /profile:
+     get:
+      summary: "#4 As a user, I can see my profile"
+      tags:
+        - profile
+      security:
+        - bearerAuth:  []
+      responses:
+        '200':
+          description: The specified action has succeed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  photoURL:
+                    type: string
+                  userId:
+                    type: string
+                  username: 
+                    type: string
+                  email: 
+                    type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+     put: 
+      summary: "#5 As user, I can edit my profile"
+      tags:
+        - profile
+      security:
+        - bearerAuth:  []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+                confirmPassword:
+                  type: string
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /profile/remove:
+    delete:
+      summary: "#14 As user, I can delete my account"
+      tags:
+        - profile
+      security:
+        - bearerAuth:  []
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /profile/{id}:
+    get:
+      summary: "#6 As a user, I can see others profile"
+      tags:
+        - profile
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: path
+          name: id
+          description: id user
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: The specified action has succeed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  photoURL:
+                    type: string
+                  userId:
+                    type: string
+                  username: 
+                    type: string
+                  email: 
+                    type: string
+                  isFriend:
+                    type: boolean
+                  requester:
+                    type: boolean # true if request dari kita, false if request dari others ke kita
+                  requestStatus:
+                    type: string
+                    enum: 
+                      - none     # isFriend false
+                      - pending  # isFriend still false
+                      - accepted # isFriend true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /users:
+    get:
+      summary: "#7 As User, I can search other User by username, also\n#8 As User, I can search other User by user id"
+      tags:
+        - friends
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+          description: The number of items to skip before starting to collect the result set.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          required: false
+          description: The number of items to return.
+      responses:
+        '200':
+          description: The specified action has succeed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                          id: 
+                            type: string
+                          userId:
+                            type: string
+                          username:
+                            type: string
+                          name:
+                            type: string
+                          photoURL:
+                            type: string  
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /friends/request/:
+    get:
+      summary: "#10 As User, I can see my friend request"
+      tags:
+        - friends
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+          description: The number of items to skip before starting to collect the result set.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          required: false
+          description: The number of items to return.
+      responses:
+        '200':
+          description: The specified action has succeed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                          id: 
+                            type: string
+                          userId:
+                            type: string
+                          username:
+                            type: string
+                          name:
+                            type: string
+                          photoURL:
+                            type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'      
+  /friends/request/{id}:
+    post:
+      summary: "#9 As User, I can ask friend request to other user"
+      tags:
+        - friends
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: path
+          name: id
+          description: id request
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cancel:
+                  type: boolean 
+                  default: false
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /friends/request/{id}/accept:
+    post:
+      summary: "#11 As User, I can accept or reject friend request from other user"
+      tags:
+        - friends
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: path
+          name: id
+          description: id request
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /friends/request/{id}/reject:
+    post:
+      summary: "#11 As User, I can accept or reject friend request from other user"
+      tags:
+        - friends
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: path
+          name: id
+          description: id request
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /friends/:
+    get:
+      summary: "#12 As user, I can see my friend list"
+      tags:
+        - friends
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+          description: The number of items to skip before starting to collect the result set.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          required: false
+          description: The number of items to return.
+      responses:
+        '200':
+          description: The specified action has succeed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                          id: 
+                            type: string
+                          userId:
+                            type: string
+                          username:
+                            type: string
+                          name:
+                            type: string
+                          photoURL:
+                            type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized' 
+  /friends/{id}/remove:
+    delete:
+      summary: "#13 As user, I can remove my friend"
+      tags:
+        - friends
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: path
+          name: id
+          description: id request
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /locations/:
+    get:
+      summary: "#15 As user, I can see maps and my friends location"
+      tags:
+        - location
+      security:
+        - bearerAuth:  []
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+          description: The number of items to skip before starting to collect the result set.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          required: false
+          description: The number of items to return.
+      responses:
+        '200':
+          description: The specified action has succeed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                          id: 
+                            type: string
+                          username:
+                            type: string
+                          photoURL:
+                            type: string
+                          lat:
+                            type: number
+                          lon:
+                            type: number
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized' 
+    put: 
+      summary: "#16 As user, I can share my location to friends manually, also #17 As User, I can periodically share location when user actively sharing"
+      tags:
+        - location
+      security:
+        - bearerAuth:  []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lat:
+                  type: number
+                lon:
+                  type: number
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    
+components:
+  responses:
+    Success:
+      description: The specified action has succeed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    BadRequest:
+      description: The specified action failed due to bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+
+  schemas:
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+  securitySchemes:
+    bearerAuth:           
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+        
+        
