@@ -1,6 +1,6 @@
-# Sprint 2
+# Sprint 3
 
-| Date        | 18 September 2023                                       |
+| Date        | 25 September 2023                                       |
 | :---------- | :------------------------------------------------------ |
 | Created by  | Wildan Hanif                                            |
 | Participant | Ariq Hakim, Alvaro Dwi, Rafiansyah Rasyid, Wildan Hanif |
@@ -9,11 +9,11 @@
 
 ### Goals:
 
-- API spec
-- DB design
-- Slicing design ke frontend
+- DB init, modeling, migration
+- Deploy API spec
+- Modifikasi Design System
 - Hi-fi design
-- Finalisasi design system
+- Slicing design ke frontend
 - Skenario test case
 
 ### Breakdown Task:
@@ -21,26 +21,25 @@
 #### Commitment: 6 goals
 
 - Ariq Hakim:
-  - [x] API spec
-  - [x] DB design
+  - [x] DB init, modeling, migration
+  - [x] Deploy API spec
 - Alvaro Dwi:
-  - [x] API spec
   - [ ] Slicing design ke frontend
+  - [x] Deploy API spec
 - Rafiansyah Rasyid:
-  - [x] API spec
+  - [x] Modifikasi design system
   - [ ] Hi-fi design
-  - [x] Design system
 - Wildan Hanif:
-  - [x] API spec
   - [ ] Skenario test case
 
 #### Delivered: 3 goals
 
 ### During Sprint
 
-2023-09-25:
+2023-10-02:
 
 1. Skenario dan slicing test case belum diselesaikan, menunggu hi-fi design selesai
+2. Sedikit perubahan pada design system memakan waktu dengan jumlah yang tidak diduga
 
 ### Notes Sprint Review
 

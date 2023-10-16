@@ -1,6 +1,6 @@
-# Sprint 2
+# Sprint 6
 
-| Date        | 18 September 2023                                       |
+| Date        | 16 Oktober 2023                                         |
 | :---------- | :------------------------------------------------------ |
 | Created by  | Wildan Hanif                                            |
 | Participant | Ariq Hakim, Alvaro Dwi, Rafiansyah Rasyid, Wildan Hanif |
@@ -9,39 +9,39 @@
 
 ### Goals:
 
-- API spec
-- DB design
+- Backend user story #4
+- Backend user story #5
+- Backend user story #6
+- Backend user story #14
 - Slicing design ke frontend
-- Hi-fi design
-- Finalisasi design system
+- integrasi auth Frontend ke Backend
 - Skenario test case
 
 ### Breakdown Task:
 
-#### Commitment: 6 goals
+#### Commitment: 3 goals
 
 - Ariq Hakim:
-  - [x] API spec
-  - [x] DB design
+  - [ ] Backend user story #4
+  - [ ] Backend user story #5
+  - [ ] Backend user story #6
+  - [ ] Backend user story #16
 - Alvaro Dwi:
-  - [x] API spec
   - [ ] Slicing design ke frontend
+  - [ ] Integrasi auth Frontend ke Backend
 - Rafiansyah Rasyid:
-  - [x] API spec
-  - [ ] Hi-fi design
-  - [x] Design system
+  - [ ] Slicing design ke frontend
 - Wildan Hanif:
-  - [x] API spec
   - [ ] Skenario test case
 
-#### Delivered: 3 goals
+#### Delivered: 2 goals
 
 ### During Sprint
 
-2023-09-25:
+2023-10-16:
 
-1. Skenario dan slicing test case belum diselesaikan, menunggu hi-fi design selesai
+1.
 
 ### Notes Sprint Review
 
-1. 3 goals yang belum selesai carry over ke sprint selanjutnya
+1.
