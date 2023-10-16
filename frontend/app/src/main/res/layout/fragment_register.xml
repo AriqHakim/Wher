@@ -33,10 +33,9 @@
         android:id="@+id/lbl_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username/Email"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="36dp"
+        android:text="Username"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/ed_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_logo_subtitle" />
@@ -48,14 +47,63 @@
         android:layout_marginHorizontal="64dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_text"
+        android:inputType="text"
         android:paddingHorizontal="16dp"
         android:paddingVertical="4dp"
-        android:inputType="textEmailAddress"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@id/lbl_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_username" />
+
+    <TextView
+        android:id="@+id/lbl_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_username" />
+
+    <EditText
+        android:id="@+id/ed_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edit_text"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_email" />
+
+    <TextView
+        android:id="@+id/lbl_display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display Name"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_email" />
+
+    <EditText
+        android:id="@+id/ed_display_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edit_text"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_display_name" />
 
     <TextView
         android:id="@+id/lbl_password"
@@ -63,12 +111,9 @@
         android:layout_height="wrap_content"
         android:text="Password"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/ed_password"
-        app:layout_constraintTop_toBottomOf="@id/ed_username"
-        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/ed_display_name" />
 
     <EditText
         android:id="@+id/ed_password"
@@ -83,22 +128,46 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_login"
         app:layout_constraintTop_toBottomOf="@id/lbl_password" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
+    <TextView
+        android:id="@+id/lbl_confirm_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Confirm Password"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_password" />
+
+    <EditText
+        android:id="@+id/ed_confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edit_text"
+        android:inputType="textPassword"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_confirm_password" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:paddingHorizontal="36dp"
-        android:text="Log In!"
+        android:text="Create Account!"
         android:textColor="@color/brand_white"
         android:textSize="16sp"
-        android:layout_marginTop="36dp"
         app:backgroundTint="@color/brand_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_password"
+        app:layout_constraintTop_toBottomOf="@id/ed_confirm_password"
         app:strokeColor="@color/brand_dark_blue"
         app:strokeWidth="2px" />
 
@@ -107,19 +176,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="First Time Using Wher?"
+        android:text="Already Have Wher? Account?"
         android:textColor="@color/brand_white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+        app:layout_constraintTop_toBottomOf="@id/btn_register" />
 
     <TextView
-        android:id="@+id/lbl_sign_up"
+        android:id="@+id/lbl_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Sign Up!"
+        android:text="Sign In!"
         android:textColor="@color/brand_light_blue"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"

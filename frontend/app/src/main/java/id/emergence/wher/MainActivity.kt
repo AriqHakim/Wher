@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             if (isLoggedIn()) {
                 graph.setStartDestination(R.id.homeFragment)
             } else {
-                graph.setStartDestination(R.id.loginFragment)
+                graph.setStartDestination(R.id.splashFragment)
             }
             // bind navGraph to fragment
             val navController = navHostFragment.navController
@@ -30,5 +29,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isLoggedIn() = FirebaseAuth.getInstance().currentUser != null
+    private fun isLoggedIn() = false
 }

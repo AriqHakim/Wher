@@ -7,6 +7,7 @@ kotlin = "1.9.0"
 kotlinx-coroutines = "1.7.3"
 material = "1.9.0"
 mockk = "1.13.7"
+maps-ktx = "4.0.0"
 okhttp = "4.11.0"
 org-jetbrains-kotlin-android = "1.8.0"
 play-services-auth = "20.7.0"
@@ -44,6 +45,10 @@ room = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "maps-ktx" }
+maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "maps-ktx" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version = "21.0.1" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version = "18.1.0" }
 kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 
 [plugins]

@@ -1,4 +1,4 @@
-package id.emergence.wher.screen.login
+package id.emergence.wher.screen.splash
 
 import android.graphics.Paint
 import android.os.Bundle
@@ -9,13 +9,12 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import id.emergence.wher.R
-import id.emergence.wher.R.color
-import id.emergence.wher.databinding.FragmentLoginBinding
+import id.emergence.wher.databinding.FragmentSplashBinding
 import id.emergence.wher.ext.navigateTo
 import id.emergence.wher.utils.viewbinding.viewBinding
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
-    private val binding by viewBinding<FragmentLoginBinding>()
+class SplashFragment : Fragment(R.layout.fragment_splash) {
+    private val binding by viewBinding<FragmentSplashBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,7 +22,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         with(binding) {
             val logoSpannable = SpannableString("Wher?")
             logoSpannable.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(requireContext(), color.brand_green2)),
+                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.brand_green2)),
                 4,
                 5,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -45,11 +44,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             lblFirstTime.text = firstTimeSpannable
             lblSignUp.paintFlags = lblSignUp.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-            btnLogin.setOnClickListener {
-                navigateTo(LoginFragmentDirections.actionLoginToHome())
+            btnSignIn.setOnClickListener {
+                navigateTo(SplashFragmentDirections.actionSplashToLogin())
             }
             lblSignUp.setOnClickListener {
-                navigateTo(LoginFragmentDirections.actionLoginToRegister())
+                navigateTo(SplashFragmentDirections.actionSplashToRegister())
             }
         }
     }
