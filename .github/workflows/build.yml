@@ -22,7 +22,7 @@ jobs:
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
       - name: Set Secret Properties
-        working-directory: ./android
+        working-directory: ./frontend
         env:
           SECRETS_PROPERTIES: ${{ secrets.SECRETS_PROPERTIES }}
         run: echo "$SECRETS_PROPERTIES" > ./secrets.properties
@@ -34,14 +34,14 @@ jobs:
           java-version: 17
 
       - name: Grant execute permission for gradlew
-        working-directory: ./android
+        working-directory: ./frontend
         run: chmod +x ./gradlew
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Build debug
-        working-directory: ./android
+        working-directory: ./frontend
         run: ./gradlew assembleDebug
 
       - name: Update latest-develop tag
