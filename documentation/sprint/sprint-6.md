@@ -9,10 +9,10 @@
 
 ### Goals:
 
-- Backend user story #4
-- Backend user story #5
-- Backend user story #6
-- Backend user story #14
+- Backend user story #4 As a user, I can see my profile
+- Backend user story #5 As user, I can edit my profile
+- Backend user story #6 As user, I can edit my profile
+- Backend user story #14 As user, I can delete my account
 - Slicing design ke frontend
 - integrasi auth Frontend ke Backend
 - Skenario test case
@@ -22,10 +22,10 @@
 #### Commitment: 3 goals
 
 - Ariq Hakim:
-  - [ ] Backend user story #4
-  - [ ] Backend user story #5
-  - [ ] Backend user story #6
-  - [ ] Backend user story #16
+  - [ ] Backend user story #4 As a user, I can see my profile
+  - [ ] Backend user story #5 As user, I can edit my profile
+  - [ ] Backend user story #6 As user, I can edit my profile
+  - [ ] Backend user story #14 As user, I can delete my account
 - Alvaro Dwi:
   - [ ] Slicing design ke frontend
   - [ ] Integrasi auth Frontend ke Backend
