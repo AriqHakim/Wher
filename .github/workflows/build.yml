@@ -57,5 +57,5 @@ jobs:
           automatic_release_tag: latest-develop
           title: "Latest development build"
           files: |
-            android/app/build/outputs/apk/debug/app-debug.apk
-            android/app/build/outputs/apk/debug/output-metadata.json
+            frontend/app/build/outputs/apk/debug/app-debug.apk
+            frontend/app/build/outputs/apk/debug/output-metadata.json
