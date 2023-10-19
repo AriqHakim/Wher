@@ -12,9 +12,11 @@ export async function getUserByID(id: string) {
     select: {
       id: true,
       email: true,
+      username: true,
+      userId: true,
       name: true,
       password: false,
-      photoURL: false,
+      photoURL: true,
     },
     where: {
       id: id,
