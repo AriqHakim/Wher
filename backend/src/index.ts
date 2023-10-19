@@ -7,6 +7,7 @@ import ExpressServer, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
 import authRouter from './modules/auth/Auth.route';
+import profileRouter from './modules/profile/Profile.route';
 
 const PORT: number = parseInt(process.env.PORT || '3000');
 
@@ -30,6 +31,7 @@ async function main() {
   });
 
   server.use('/', authRouter);
+  server.use('/', profileRouter);
 }
 
 main();
