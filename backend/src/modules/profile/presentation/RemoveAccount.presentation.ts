@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { ResponseBody } from '../../../framework/ResponseBody';
-import { GetProfileById } from '../Profile.interface';
 import { authChecker } from '../../../framework/Auth.Checker';
-import { getProfileByIdLogic } from '../logic/GetProfileById.logic';
+import { GetProfileById } from '../Profile.interface';
+import { ResponseBody } from '../../../framework/ResponseBody';
+import { removeAccountLogic } from '../logic/RemoveAccount.logic';
 
-export async function getProfileById(req: Request, res: Response) {
+export async function removeAccount(req: Request, res: Response) {
   try {
     const data = new GetProfileById();
 
@@ -13,9 +13,13 @@ export async function getProfileById(req: Request, res: Response) {
     data.user = auth.user;
     data.id = req.params.id;
 
-    const result = await getProfileByIdLogic(data);
+    await removeAccountLogic(data);
 
-    res.status(200);
+    const result: ResponseBody<null> = {
+      message: 'Account Removal Success!',
+    };
+
+    res.status(201);
     res.send(result);
     return result;
   } catch (error) {

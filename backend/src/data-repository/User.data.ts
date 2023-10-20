@@ -56,3 +56,7 @@ export async function getUserByEmailOrUsername(data: string) {
   };
   return await repository.findOne(options);
 }
+
+export async function deleteUser(id: string) {
+  return await repository.delete(id);
+}

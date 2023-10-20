@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ResponseBody } from 'src/framework/ResponseBody';
+import { ResponseBody } from '../../../framework/ResponseBody';
 import { GetMyProfileInterface } from '../Profile.interface';
 import { authChecker } from '../../../framework/Auth.Checker';
 
