@@ -107,7 +107,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -117,6 +117,9 @@ paths:
                   type: string
                 confirmPassword:
                   type: string
+                file:
+                  type: string
+                  format: binary
       responses:
         '201':
           $ref: '#/components/responses/Success'
