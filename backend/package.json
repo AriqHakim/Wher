@@ -12,9 +12,9 @@
     "watch:dev": "nodemon ./dist",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migration:generate": "ts-node ./node_modules/typeorm/cli migration:generate -d ./src/orm.config.ts",
-    "migration:up": "ts-node ./node_modules/typeorm/cli migration:run -d src/orm.config.ts",
-    "migration:down": "ts-node ./node_modules/typeorm/cli migration:revert -d src/orm.config.ts",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli migration:generate -d ./src/config/orm.config.ts",
+    "migration:up": "ts-node ./node_modules/typeorm/cli migration:run -d src/config/orm.config.ts",
+    "migration:down": "ts-node ./node_modules/typeorm/cli migration:revert -d src/config/orm.config.ts",
     "lint": "eslint --fix src/**/*.{ts,tsx}",
     "prettier": "prettier"
   },
