@@ -1,4 +1,4 @@
-import { FindOneOptions } from 'typeorm';
+import { FindManyOptions, FindOneOptions } from 'typeorm';
 import { User } from '../entity/User.entity';
 import AppDataSource from '../config/orm.config';
 
@@ -50,4 +50,33 @@ export async function getUserByEmailOrUsername(data: string) {
 
 export async function deleteUser(id: string) {
   return await repository.delete(id);
+}
+
+export async function getUserByUserIdOrUsername(
+  data: string,
+  limit: number,
+  offset: number,
+) {
+  const options: FindManyOptions<User> = {
+    select: {
+      id: true,
+      email: false,
+      userId: true,
+      username: true,
+      name: true,
+      photoURL: true,
+      password: false,
+    },
+    where: [
+      {
+        username: data,
+      },
+      {
+        userId: data,
+      },
+    ],
+    take: limit,
+    skip: offset,
+  };
+  return await repository.find(options);
 }

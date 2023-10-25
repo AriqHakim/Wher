@@ -1,3 +1,5 @@
+import { Request } from 'express';
+import { BadRequestError } from './Error.interface';
 export function randomString(length: number): string {
   let result = '';
   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -16,4 +18,15 @@ export function giveCurrentDateTime() {
     today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
   const dateTime = date + '_' + time;
   return dateTime;
+}
+
+export function parseQueryToInt(query: Request['query'], source: string) {
+  if (query[source] === undefined) {
+    throw new BadRequestError(`Field '${source}' can not be undefined`);
+  }
+  const parsed_value = parseInt(query[source] as string);
+  if (isNaN(parsed_value)) {
+    throw new BadRequestError(`Field '${source}' is not a number`);
+  }
+  return parsed_value;
 }
