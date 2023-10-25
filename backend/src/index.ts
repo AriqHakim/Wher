@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import bodyParser from 'body-parser';
-import AppDataSource from './orm.config';
+import AppDataSource from './config/orm.config';
 import ExpressServer, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
