@@ -2,5 +2,5 @@ import { searchFriendRequester } from '../../../data-repository/FriendRequest.da
 import { GetFriendRequestInterface } from '../Friends.interface';
 
 export async function GetFriendRequestLogic(data: GetFriendRequestInterface) {
-  return await searchFriendRequester(data.user.id);
+  return await searchFriendRequester(data.user.id, data.limit, data.offset);
 }

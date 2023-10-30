@@ -9,6 +9,7 @@ import cors from 'cors';
 import authRouter from './modules/auth/Auth.route';
 import profileRouter from './modules/profile/Profile.route';
 import friendsRouter from './modules/friends/Friends.route';
+import locationRouter from './modules/location/Location.route';
 
 const PORT: number = parseInt(process.env.PORT || '3000');
 
@@ -34,6 +35,7 @@ async function main() {
   server.use('/', authRouter);
   server.use('/', profileRouter);
   server.use('/', friendsRouter);
+  server.use('/', locationRouter);
 }
 
 main();
