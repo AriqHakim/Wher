@@ -1,5 +1,7 @@
 import { Request } from 'express';
 import { BadRequestError } from './Error.interface';
+import { EntityTarget, FindManyOptions } from 'typeorm';
+import AppDataSource from '../config/orm.config';
 export function randomString(length: number): string {
   let result = '';
   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,4 +31,13 @@ export function parseQueryToInt(query: Request['query'], source: string) {
     throw new BadRequestError(`Field '${source}' is not a number`);
   }
   return parsed_value;
+}
+
+export async function countTotalData<T>(
+  entity: EntityTarget<T>,
+  options?: FindManyOptions<T>,
+) {
+  delete options.take;
+  delete options.skip;
+  return await AppDataSource.getRepository(entity).count(options);
 }

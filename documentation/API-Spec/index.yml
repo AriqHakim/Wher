@@ -278,27 +278,32 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: array
-                    items:
-                        type: object
-                        properties:
-                          id: 
-                            type: string
-                          status:
-                            type: string
-                          requester: 
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
                             type: object
                             properties:
                               id: 
                                 type: string
-                              userId:
+                              status:
                                 type: string
-                              username:
-                                type: string
-                              name:
-                                type: string
-                              photoURL:
-                                type: string
+                              requester: 
+                                type: object
+                                properties:
+                                  id: 
+                                    type: string
+                                  userId:
+                                    type: string
+                                  username:
+                                    type: string
+                                  name:
+                                    type: string
+                                  photoURL:
+                                    type: string
+                  total_data:
+                    type: number   
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -449,7 +454,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  /locations/:
+  /locations:
     get:
       summary: "#15 As user, I can see maps and my friends location"
       tags:
@@ -483,20 +488,28 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: array
-                    items:
-                        type: object
-                        properties:
-                          id: 
-                            type: string
-                          username:
-                            type: string
-                          photoURL:
-                            type: string
-                          lat:
-                            type: number
-                          lon:
-                            type: number
+                    type: object
+                    properties: 
+                      data:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              id: 
+                                type: string
+                              username:
+                                type: string
+                              photoURL:
+                                type: string
+                              location: 
+                                type: object
+                                properties:
+                                  lat:
+                                    type: number
+                                  lon:
+                                    type: number
+                  total_data:
+                    type: number
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':

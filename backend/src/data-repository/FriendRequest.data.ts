@@ -1,6 +1,7 @@
 import { FindManyOptions, FindOneOptions } from 'typeorm';
 import { FriendRequest } from '../entity/FriendRequest.entity';
 import AppDataSource from '../config/orm.config';
+import { countTotalData } from '../framework/Utils';
 
 const repository = AppDataSource.getRepository(FriendRequest);
 export async function checkFriendRequest(
@@ -21,7 +22,11 @@ export async function checkFriendRequest(
   return await repository.findOne(options);
 }
 
-export async function searchFriendRequester(targetId: string) {
+export async function searchFriendRequester(
+  targetId: string,
+  limit: number,
+  offset: number,
+) {
   const options: FindManyOptions<FriendRequest> = {
     select: {
       id: true,
@@ -45,6 +50,14 @@ export async function searchFriendRequester(targetId: string) {
       },
     },
     relations: ['target', 'requester'],
+    take: limit,
+    skip: offset,
   };
-  return await repository.find(options);
+  const data = await repository.find(options);
+  const total_data = await countTotalData(FriendRequest, options);
+
+  return {
+    data,
+    total_data,
+  };
 }

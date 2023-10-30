@@ -1,27 +1,27 @@
 import { Request, Response } from 'express';
 import { ResponseBody } from '../../../framework/ResponseBody';
-import { FriendRequest } from '../../../entity/FriendRequest.entity';
+import { User } from '../../../entity/User.entity';
 import { authChecker } from '../../../framework/Auth.Checker';
-import { GetFriendRequestInterface } from '../Friends.interface';
+import { GetFriendLocationInterface } from '../Location.interface';
 import { parseQueryToInt } from '../../../framework/Utils';
-import { GetFriendRequestLogic } from '../logic/GetFriendRequests.logic';
-import { PaginationResult } from 'src/framework/pagination.interface';
+import { GetFriendRequestLogic } from '../logic/GetFriendLocation.presentation';
+import { PaginationResult } from '../../../framework/pagination.interface';
 
-export async function GetFriendRequest(req: Request, res: Response) {
+export async function GetFriendLocation(req: Request, res: Response) {
   try {
     const auth = await authChecker(req.headers['authorization'] as string);
 
-    const data = new GetFriendRequestInterface();
+    const data = new GetFriendLocationInterface();
 
     data.user = auth.user;
     data.offset = parseQueryToInt(req.query, 'offset');
     data.limit = parseQueryToInt(req.query, 'limit');
 
-    const requests = await GetFriendRequestLogic(data);
+    const users = await GetFriendRequestLogic(data);
 
     res.status(200);
-    const result: ResponseBody<PaginationResult<FriendRequest>> = {
-      data: requests,
+    const result: ResponseBody<PaginationResult<User>> = {
+      data: users,
     };
     res.send(result);
     return result;
