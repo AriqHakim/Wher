@@ -278,30 +278,27 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                          id: 
+                            type: string
+                          status:
+                            type: string
+                          requester: 
                             type: object
                             properties:
                               id: 
                                 type: string
-                              status:
+                              userId:
                                 type: string
-                              requester: 
-                                type: object
-                                properties:
-                                  id: 
-                                    type: string
-                                  userId:
-                                    type: string
-                                  username:
-                                    type: string
-                                  name:
-                                    type: string
-                                  photoURL:
-                                    type: string
+                              username:
+                                type: string
+                              name:
+                                type: string
+                              photoURL:
+                                type: string
                   total_data:
                     type: number   
         '400':
@@ -486,28 +483,25 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
+                properties: 
                   data:
-                    type: object
-                    properties: 
-                      data:
-                        type: array
-                        items:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                          id: 
+                            type: string
+                          username:
+                            type: string
+                          photoURL:
+                            type: string
+                          location: 
                             type: object
                             properties:
-                              id: 
-                                type: string
-                              username:
-                                type: string
-                              photoURL:
-                                type: string
-                              location: 
-                                type: object
-                                properties:
-                                  lat:
-                                    type: number
-                                  lon:
-                                    type: number
+                              lat:
+                                type: number
+                              lon:
+                                type: number
                   total_data:
                     type: number
         '400':

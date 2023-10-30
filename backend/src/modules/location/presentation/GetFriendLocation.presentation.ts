@@ -20,8 +20,9 @@ export async function GetFriendLocation(req: Request, res: Response) {
     const users = await GetFriendRequestLogic(data);
 
     res.status(200);
-    const result: ResponseBody<PaginationResult<User>> = {
-      data: users,
+    const result: PaginationResult<User> = {
+      data: users.data,
+      total_data: users.total_data,
     };
     res.send(result);
     return result;
