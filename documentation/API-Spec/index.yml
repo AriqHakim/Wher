@@ -212,6 +212,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -243,7 +244,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
-  /friends/request/:
+  /friends/request:
     get:
       summary: "#10 As User, I can see my friend request"
       tags:
@@ -263,6 +264,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -282,14 +284,21 @@ paths:
                         properties:
                           id: 
                             type: string
-                          userId:
+                          status:
                             type: string
-                          username:
-                            type: string
-                          name:
-                            type: string
-                          photoURL:
-                            type: string
+                          requester: 
+                            type: object
+                            properties:
+                              id: 
+                                type: string
+                              userId:
+                                type: string
+                              username:
+                                type: string
+                              name:
+                                type: string
+                              photoURL:
+                                type: string
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -387,6 +396,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -459,6 +469,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -500,9 +511,9 @@ paths:
         required: true
         content:
           application/json:
-            schema:
+            schema: 
               type: object
-              properties:
+              properties:   
                 lat:
                   type: number
                 lon:
