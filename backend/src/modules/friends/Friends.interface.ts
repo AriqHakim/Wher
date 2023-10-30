@@ -6,3 +6,9 @@ export class SearchUserInterface {
     limit: number
     offset: number
 }
+
+export class GetFriendRequestInterface {
+    user: User
+    limit: number
+    offset: number
+}

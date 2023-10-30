@@ -1,4 +1,4 @@
-import { FindManyOptions, FindOneOptions } from 'typeorm';
+import { FindManyOptions, FindOneOptions, ILike } from 'typeorm';
 import { User } from '../entity/User.entity';
 import AppDataSource from '../config/orm.config';
 
@@ -69,7 +69,7 @@ export async function getUserByUserIdOrUsername(
     },
     where: [
       {
-        username: data,
+        username: ILike(`%${data}%`),
       },
       {
         userId: data,
