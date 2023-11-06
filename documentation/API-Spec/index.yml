@@ -378,7 +378,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  /friends/:
+  /friends:
     get:
       summary: "#12 As user, I can see my friend list"
       tags:
@@ -426,6 +426,8 @@ paths:
                             type: string
                           photoURL:
                             type: string
+                  total_data:
+                    type: number
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
