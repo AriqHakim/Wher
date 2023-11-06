@@ -13,7 +13,7 @@ export class GetFriendRequestInterface {
   offset: number;
 }
 
-export class RemoveFriendInterface {
+export class FriendRequestInterface {
   user: User;
   id: string;
 }

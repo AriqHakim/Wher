@@ -3,13 +3,13 @@ import {
   NotFoundError,
 } from '../../../framework/Error.interface';
 import { getUserByID } from '../../../data-repository/User.data';
-import { RemoveFriendInterface } from '../Friends.interface';
+import { FriendRequestInterface } from '../Friends.interface';
 import {
   deleteFriendship,
   getFriendship,
 } from '../../../data-repository/UserFriend.data';
 
-export async function removeFriendLogic(data: RemoveFriendInterface) {
+export async function removeFriendLogic(data: FriendRequestInterface) {
   const target = await getUserByID(data.id);
   if (!target) {
     throw new NotFoundError('User is not found!');

@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { ResponseBody } from '../../../framework/ResponseBody';
 import { authChecker } from '../../../framework/Auth.Checker';
 import { FriendRequestInterface } from '../Friends.interface';
-import { removeFriendLogic } from '../logic/RemoveFriends.logic';
+import { friendRequestLogic } from '../logic/FriendRequest.logic';
 
-export async function removeFriend(req: Request, res: Response) {
+export async function friendRequest(req: Request, res: Response) {
   try {
     const auth = await authChecker(req.headers['authorization'] as string);
 
@@ -13,11 +13,11 @@ export async function removeFriend(req: Request, res: Response) {
     data.user = auth.user;
     data.id = req.params.id;
 
-    await removeFriendLogic(data);
+    await friendRequestLogic(data);
 
     res.status(201);
     const result: ResponseBody<null> = {
-      message: 'Remove Friend Successful!',
+      message: 'Friend Request Successful!',
     };
     res.send(result);
     return result;

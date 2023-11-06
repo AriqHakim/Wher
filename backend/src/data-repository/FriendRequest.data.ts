@@ -61,3 +61,7 @@ export async function searchFriendRequester(
     total_data,
   };
 }
+
+export async function upsertFriendRequest(data: FriendRequest) {
+  return await repository.save(data);
+}
