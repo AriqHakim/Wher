@@ -1,4 +1,4 @@
-import { FindManyOptions } from 'typeorm';
+import { FindManyOptions, FindOptions } from 'typeorm';
 import { UserFriend } from '../entity/UserFriend.entity';
 import AppDataSource from '../config/orm.config';
 import { countTotalData } from '../framework/Utils';
@@ -115,4 +115,8 @@ export async function getFriendsByUser(
   const data = await repository.find(options);
   const total_data = await countTotalData(UserFriend, options);
   return { data, total_data };
+}
+
+export async function deleteFriendship(id: string) {
+  await repository.delete(id);
 }
