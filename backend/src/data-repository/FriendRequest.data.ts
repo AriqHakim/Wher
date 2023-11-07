@@ -61,3 +61,20 @@ export async function searchFriendRequester(
     total_data,
   };
 }
+
+export async function upsertFriendRequest(data: FriendRequest) {
+  return await repository.save(data);
+}
+
+export async function getFriendRequestByID(id: string) {
+  return await repository.findOne({
+    where: {
+      id: id,
+    },
+    relations: ['requester', 'target'],
+  });
+}
+
+export async function deleteFriendRequest(id: string) {
+  await repository.delete(id);
+}
