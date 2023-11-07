@@ -16,7 +16,7 @@ export async function editProfile(req: Request, res: Response) {
     data.confirmPassword = req.body.confirmPassword;
     data.file = req.file;
 
-    const updatedUser = await editProfileLogic(data);
+    await editProfileLogic(data);
 
     res.status(201);
     const result: ResponseBody<null> = {

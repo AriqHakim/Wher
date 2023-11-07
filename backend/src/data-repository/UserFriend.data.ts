@@ -1,4 +1,4 @@
-import { FindManyOptions, FindOptions } from 'typeorm';
+import { FindManyOptions } from 'typeorm';
 import { UserFriend } from '../entity/UserFriend.entity';
 import AppDataSource from '../config/orm.config';
 import { countTotalData } from '../framework/Utils';

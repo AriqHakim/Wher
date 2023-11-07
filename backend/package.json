@@ -15,7 +15,7 @@
     "migration:generate": "ts-node ./node_modules/typeorm/cli migration:generate -d ./src/config/orm.config.ts",
     "migration:up": "ts-node ./node_modules/typeorm/cli migration:run -d src/config/orm.config.ts",
     "migration:down": "ts-node ./node_modules/typeorm/cli migration:revert -d src/config/orm.config.ts",
-    "lint": "eslint --fix src/**/*.{ts,tsx}",
+    "lint": "eslint --fix src/**/*.{ts,tsx} --quiet",
     "prettier": "prettier"
   },
   "author": "Team Emergence",
