@@ -118,5 +118,9 @@ export async function getFriendsByUser(
 }
 
 export async function deleteFriendship(id: string) {
-  await repository.delete(id);
+  return await repository.delete(id);
+}
+
+export async function upsertUserFriend(data: UserFriend) {
+  return await repository.save(data);
 }
