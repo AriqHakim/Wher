@@ -14,7 +14,10 @@ import id.emergence.wher.utils.viewbinding.viewBinding
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding by viewBinding<FragmentProfileBinding>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             val tabProfile = layoutInflater.inflate(R.layout.view_custom_tab, null)
@@ -22,26 +25,30 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val tabFriends = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabFriends.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_friends)
 
-            tabLayout.addTab(tabLayout.newTab().setCustomView(tabProfile).also {
-                it.select()
-            })
+            tabLayout.addTab(
+                tabLayout.newTab().setCustomView(tabProfile).also {
+                    it.select()
+                },
+            )
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabFriends))
-            tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-                override fun onTabSelected(tab: Tab?) {
-                    when (tab?.position) {
-                        1 -> navigateTo(ProfileFragmentDirections.actionProfileToFriendList())
-                        else -> {
-                            // do nothing
+            tabLayout.addOnTabSelectedListener(
+                object : OnTabSelectedListener {
+                    override fun onTabSelected(tab: Tab?) {
+                        when (tab?.position) {
+                            1 -> navigateTo(ProfileFragmentDirections.actionProfileToFriendList())
+                            else -> {
+                                // do nothing
+                            }
                         }
                     }
-                }
 
-                override fun onTabUnselected(tab: Tab?) {
-                }
+                    override fun onTabUnselected(tab: Tab?) {
+                    }
 
-                override fun onTabReselected(tab: Tab?) {
-                }
-            })
+                    override fun onTabReselected(tab: Tab?) {
+                    }
+                },
+            )
         }
     }
 }

@@ -35,6 +35,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_title" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_image"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginStart="-32dp"
+        app:backgroundTint="@color/brand_yellow"
+        app:icon="@drawable/ic_edit"
+        app:iconGravity="textStart"
+        app:iconPadding="@null"
+        app:iconTint="@color/brand_purple"
+        app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+        app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -118,6 +133,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
     <FrameLayout
+        android:id="@+id/layout_display_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
@@ -125,8 +141,7 @@
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbl_display_email"
-        >
+        app:layout_constraintTop_toBottomOf="@id/lbl_display_email">
 
         <EditText
             android:id="@+id/ed_display_name"
@@ -138,22 +153,54 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="4dp"
             android:text="Shigurere"
-            android:textColor="@color/brand_purple"
             android:textAlignment="center"
+            android:textColor="@color/brand_purple"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lbl_display_email"/>
+            app:layout_constraintTop_toBottomOf="@id/lbl_display_email" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_confirm_display_name"
             android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
+            app:backgroundTint="@color/brand_green"
             app:icon="@drawable/ic_check"
             app:iconGravity="textStart"
             app:iconPadding="@null"
-            app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge"
-            app:backgroundTint="@color/brand_green" />
+            app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
 
     </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:text="Logout"
+        android:textColor="@color/brand_purple"
+        app:backgroundTint="@color/brand_yellow"
+        app:iconGravity="textStart"
+        app:iconPadding="@null"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_display_name"
+        app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:text="Delete Account"
+        app:backgroundTint="@color/brand_red"
+        app:iconGravity="textStart"
+        app:iconPadding="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_logout"
+        app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.gradle.secrets)
     alias(libs.plugins.androidx.navigation.safeArgs)
+    kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
 android {
@@ -85,6 +86,8 @@ dependencies {
      */
     implementation(libs.bundles.koin)
     implementation(libs.kotlinx.coroutines.android)
+    // datastore
+    implementation(libs.androidx.datastore)
     // remote
     implementation(libs.bundles.networking)
     // work

@@ -1,4 +1,4 @@
-package id.emergence.wher.screen.splash
+package id.emergence.wher.screen.auth.splash
 
 import android.graphics.Paint
 import android.os.Bundle
@@ -16,7 +16,10 @@ import id.emergence.wher.utils.viewbinding.viewBinding
 class SplashFragment : Fragment(R.layout.fragment_splash) {
     private val binding by viewBinding<FragmentSplashBinding>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
@@ -25,7 +28,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                 ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.brand_green2)),
                 4,
                 5,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
             lblLogo.text = logoSpannable
             val firstTimeSpannable = SpannableString("First Time Using Wher?")
@@ -33,13 +36,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                 ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.brand_green2)),
                 21,
                 22,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
             firstTimeSpannable.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.brand_blue)),
                 17,
                 21,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
             lblFirstTime.text = firstTimeSpannable
             lblSignUp.paintFlags = lblSignUp.paintFlags or Paint.UNDERLINE_TEXT_FLAG

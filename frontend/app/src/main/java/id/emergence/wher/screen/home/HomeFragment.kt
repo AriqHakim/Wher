@@ -28,24 +28,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabProfile))
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabFriends))
-            tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-                override fun onTabSelected(tab: Tab?) {
-                    when (tab?.position) {
-                        0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile())
-                        else -> navigateTo(HomeFragmentDirections.actionHomeToFriendList())
+            tabLayout.addOnTabSelectedListener(
+                object : OnTabSelectedListener {
+                    override fun onTabSelected(tab: Tab?) {
+                        when (tab?.position) {
+                            0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile())
+                            else -> navigateTo(HomeFragmentDirections.actionHomeToFriendList())
+                        }
                     }
-                }
 
-                override fun onTabUnselected(tab: Tab?) {
-                }
-
-                override fun onTabReselected(tab: Tab?) {
-                    when (tab?.position) {
-                        0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile())
-                        else -> navigateTo(HomeFragmentDirections.actionHomeToFriendList())
+                    override fun onTabUnselected(tab: Tab?) {
                     }
-                }
-            })
+
+                    override fun onTabReselected(tab: Tab?) {
+                        when (tab?.position) {
+                            0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile())
+                            else -> navigateTo(HomeFragmentDirections.actionHomeToFriendList())
+                        }
+                    }
+                },
+            )
         }
     }
 }

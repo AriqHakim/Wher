@@ -1,6 +1,9 @@
 package id.emergence.wher
 
 import android.app.Application
+import id.emergence.wher.di.dataModule
+import id.emergence.wher.di.domainModule
+import id.emergence.wher.di.uiModule
 import logcat.AndroidLogcatLogger
 import logcat.LogPriority
 import org.koin.android.ext.koin.androidContext
@@ -18,16 +21,13 @@ class App : Application() {
             androidContext(this@App)
             workManagerFactory()
             // modules
-            // modules(
-            //     listOf(
-            //         LOCAL_MODULE,
-            //         REMOTE_MODULE,
-            //         REPOSITORY_MODULE,
-            //         USE_CASE_MODULE,
-            //         CORE_MODULE,
-            //         APP_MODULE,
-            //     ),
-            // )
+            modules(
+                listOf(
+                    dataModule,
+                    domainModule,
+                    uiModule,
+                ),
+            )
         }
     }
 }
