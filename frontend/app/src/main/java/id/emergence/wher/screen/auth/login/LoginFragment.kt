@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import id.emergence.wher.R
 import id.emergence.wher.R.color
@@ -21,7 +22,9 @@ import id.emergence.wher.ext.snackbar
 import id.emergence.wher.screen.auth.login.LoginViewModel.LoginSuccess
 import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import logcat.logcat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -49,7 +52,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     snackbar("Error : ${event.throwable?.message}")
                 }
             }
-        }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onViewCreated(

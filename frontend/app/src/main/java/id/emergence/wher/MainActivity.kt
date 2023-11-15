@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import id.emergence.wher.data.prefs.DataStoreManager
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
+    private val prefs by inject<DataStoreManager>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,5 +33,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isLoggedIn() = false
+    private suspend fun isLoggedIn() = prefs.isLoggedIn.first()
 }

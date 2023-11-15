@@ -151,7 +151,8 @@
             android:background="@drawable/bg_edit_text"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="16dp"
-            android:paddingVertical="4dp"
+            android:textSize="12sp"
+            android:paddingVertical="8dp"
             android:text="Shigurere"
             android:textAlignment="center"
             android:textColor="@color/brand_purple"
@@ -203,4 +204,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_logout"
         app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/loading_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
