@@ -13,7 +13,7 @@ import org.koin.dsl.module
 val domainModule =
     module {
         single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
-        single<FriendRepository> { FriendRepositoryImpl(get()) }
-        single<LocationRepository> { LocationRepositoryImpl(get()) }
-        single<ProfileRepository> { ProfileRepositoryImpl(get()) }
+        single<FriendRepository> { FriendRepositoryImpl(get(), get()) }
+        single<LocationRepository> { LocationRepositoryImpl(get(), get()) }
+        single<ProfileRepository> { ProfileRepositoryImpl(get(), get()) }
     }

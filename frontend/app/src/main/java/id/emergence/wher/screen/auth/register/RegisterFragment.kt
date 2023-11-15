@@ -10,18 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import id.emergence.wher.R
 import id.emergence.wher.R.color
 import id.emergence.wher.databinding.FragmentRegisterBinding
-import id.emergence.wher.domain.model.LoginData
 import id.emergence.wher.domain.model.RegisterData
 import id.emergence.wher.ext.hideKeyboard
 import id.emergence.wher.ext.navigateTo
 import id.emergence.wher.ext.snackbar
-import id.emergence.wher.screen.auth.login.LoginFragmentDirections
-import id.emergence.wher.screen.auth.login.LoginViewModel.LoginSuccess
 import id.emergence.wher.screen.auth.register.RegisterViewModel.RegisterSuccess
 import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
@@ -41,20 +37,22 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     override fun onStart() {
         super.onStart()
-        viewModel.events.onEach { event ->
-            when (event) {
-                RegisterSuccess -> {
-                    navigateTo(RegisterFragmentDirections.actionRegisterToLogin())
+        viewModel
+            .events
+            .onEach { event ->
+                when (event) {
+                    RegisterSuccess -> {
+                        navigateTo(RegisterFragmentDirections.actionRegisterToLogin())
+                    }
+                    OneTimeEvent.Loading -> {
+                        toggleLoading(true)
+                    }
+                    is OneTimeEvent.Error -> {
+                        toggleLoading(false)
+                        snackbar("Error : ${event.throwable?.message}")
+                    }
                 }
-                OneTimeEvent.Loading -> {
-                    toggleLoading(true)
-                }
-                is OneTimeEvent.Error -> {
-                    toggleLoading(false)
-                    snackbar("Error : ${event.throwable?.message}")
-                }
-            }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onViewCreated(

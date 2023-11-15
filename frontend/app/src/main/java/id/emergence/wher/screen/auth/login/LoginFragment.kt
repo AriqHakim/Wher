@@ -24,7 +24,6 @@ import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import logcat.logcat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -39,20 +38,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onStart() {
         super.onStart()
-        viewModel.events.onEach { event ->
-            when (event) {
-                LoginSuccess -> {
-                    navigateTo(LoginFragmentDirections.actionLoginToHome())
+        viewModel
+            .events
+            .onEach { event ->
+                when (event) {
+                    LoginSuccess -> {
+                        navigateTo(LoginFragmentDirections.actionLoginToHome())
+                    }
+                    OneTimeEvent.Loading -> {
+                        toggleLoading(true)
+                    }
+                    is OneTimeEvent.Error -> {
+                        toggleLoading(false)
+                        snackbar("Error : ${event.throwable?.message}")
+                    }
                 }
-                OneTimeEvent.Loading -> {
-                    toggleLoading(true)
-                }
-                is OneTimeEvent.Error -> {
-                    toggleLoading(false)
-                    snackbar("Error : ${event.throwable?.message}")
-                }
-            }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onViewCreated(

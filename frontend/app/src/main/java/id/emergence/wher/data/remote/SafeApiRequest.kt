@@ -49,7 +49,8 @@ private val json =
     }
 
 fun decodeErrorApiResponse(str: String): String =
-    json.decodeFromString(
+    json
+        .decodeFromString(
             MessageResponse.serializer(),
             str,
         ).message

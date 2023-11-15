@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home_to_profile"
-            app:destination="@id/profileFragment"/>
+            app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_home_to_friend_list"
-            app:destination="@id/friendListFragment"/>
+            app:destination="@id/friendListFragment" />
     </fragment>
 
     <fragment
@@ -72,10 +72,49 @@
         android:id="@+id/friendListFragment"
         android:name="id.emergence.wher.screen.friends.list.FriendListFragment"
         android:label="FriendListFragment"
-        tools:layout="@layout/fragment_friend_list" >
+        tools:layout="@layout/fragment_friend_list">
         <action
             android:id="@+id/action_friend_list_to_profile"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_friend_list_to_detail"
+            app:destination="@id/friendDetailFragment" />
+        <action
+            android:id="@+id/action_friend_list_to_request"
+            app:destination="@id/friendRequestFragment" />
+        <action
+            android:id="@+id/action_friend_list_to_search"
+            app:destination="@id/friendSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendDetailFragment"
+        android:name="id.emergence.wher.screen.friends.detail.FriendDetailFragment"
+        android:label="FriendDetailFragment"
+        tools:layout="@layout/fragment_friend_detail">
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendRequestFragment"
+        android:name="id.emergence.wher.screen.friends.request.FriendRequestFragment"
+        android:label="FriendRequestFragment"
+        tools:layout="@layout/fragment_friend_request">
+        <action
+            android:id="@+id/action_friend_request_to_detail"
+            app:destination="@id/friendDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendSearchFragment"
+        android:name="id.emergence.wher.screen.friends.search.FriendSearchFragment"
+        android:label="FriendSearchFragment"
+        tools:layout="@layout/fragment_friend_search">
+        <argument
+            android:name="query"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_friend_search_to_detail"
+            app:destination="@id/friendDetailFragment" />
     </fragment>
 </navigation>

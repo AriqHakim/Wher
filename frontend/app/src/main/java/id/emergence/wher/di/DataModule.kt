@@ -45,7 +45,7 @@ val dataModule =
                     HttpLoggingInterceptor { message ->
                         logcat("API") { message }
                     }.apply {
-                        level = HttpLoggingInterceptor.Level.BASIC
+                        level = HttpLoggingInterceptor.Level.BODY
                     }
                 builder.addInterceptor(logger)
             }

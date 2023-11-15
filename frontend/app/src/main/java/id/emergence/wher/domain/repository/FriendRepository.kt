@@ -14,7 +14,10 @@ interface FriendRepository {
 
     fun searchUsers(q: String): Flow<PagingData<User>>
 
-    suspend fun requestFriend(id: String): Flow<Result<String>>
+    suspend fun requestFriend(
+        id: String,
+        cancel: Boolean,
+    ): Flow<Result<String>>
 
     suspend fun acceptFriendRequest(id: String): Flow<Result<String>>
 

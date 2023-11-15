@@ -6,12 +6,12 @@
     android:background="@drawable/bg">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/loading_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lbl_logo"
@@ -41,8 +41,8 @@
         android:id="@+id/lbl_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username/Email"
         android:layout_marginTop="96dp"
+        android:text="Username/Email"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/ed_username"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,12 +56,12 @@
         android:layout_marginHorizontal="64dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_text"
+        android:inputType="textEmailAddress"
         android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textAlignment="center"
         android:textColor="@color/brand_purple"
         android:textSize="12sp"
-        android:paddingVertical="8dp"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@id/lbl_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,42 +71,41 @@
         android:id="@+id/lbl_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Password"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/ed_password"
-        app:layout_constraintTop_toBottomOf="@id/ed_username"
-        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/ed_username" />
 
     <EditText
         android:id="@+id/ed_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="64dp"
-        android:textColor="@color/brand_purple"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_text"
         android:inputType="textPassword"
         android:paddingHorizontal="16dp"
-        android:textSize="12sp"
         android:paddingVertical="8dp"
         android:textAlignment="center"
+        android:textColor="@color/brand_purple"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_login"
         app:layout_constraintTop_toBottomOf="@id/lbl_password" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:paddingHorizontal="36dp"
         android:text="Log In!"
         android:textColor="@color/brand_white"
         android:textSize="16sp"
-        android:layout_marginTop="36dp"
         app:backgroundTint="@color/brand_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/loading_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lbl_logo"
@@ -57,15 +57,15 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_text"
         android:inputType="text"
-        android:textSize="12sp"
-        android:paddingVertical="8dp"
-        tools:text="varoalvaro493@gmail.com"
         android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
         android:textAlignment="center"
         android:textColor="@color/brand_purple"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbl_username" />
+        app:layout_constraintTop_toBottomOf="@id/lbl_username"
+        tools:text="varoalvaro493@gmail.com" />
 
     <TextView
         android:id="@+id/lbl_email"
@@ -85,11 +85,11 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_text"
         android:inputType="textEmailAddress"
-        android:textColor="@color/brand_purple"
         android:paddingHorizontal="16dp"
-        android:textSize="12sp"
         android:paddingVertical="8dp"
         android:textAlignment="center"
+        android:textColor="@color/brand_purple"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_email" />
@@ -111,12 +111,12 @@
         android:layout_marginHorizontal="64dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_text"
-        android:textColor="@color/brand_purple"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="16dp"
-        android:textSize="12sp"
         android:paddingVertical="8dp"
         android:textAlignment="center"
+        android:textColor="@color/brand_purple"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_display_name" />
@@ -139,11 +139,11 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_edit_text"
         android:inputType="textPassword"
-        android:textColor="@color/brand_purple"
         android:paddingHorizontal="16dp"
-        android:textSize="12sp"
         android:paddingVertical="8dp"
         android:textAlignment="center"
+        android:textColor="@color/brand_purple"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_password" />
@@ -167,10 +167,10 @@
         android:background="@drawable/bg_edit_text"
         android:inputType="textPassword"
         android:paddingHorizontal="16dp"
-        android:textColor="@color/brand_purple"
-        android:textSize="12sp"
         android:paddingVertical="8dp"
         android:textAlignment="center"
+        android:textColor="@color/brand_purple"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_confirm_password" />

@@ -1,8 +1,8 @@
 package id.emergence.wher.data.remote
 
+import id.emergence.wher.data.remote.json.FriendLocationResponse
 import id.emergence.wher.data.remote.json.FriendRequestBody
 import id.emergence.wher.data.remote.json.FriendRequestResponse
-import id.emergence.wher.data.remote.json.FriendResponse
 import id.emergence.wher.data.remote.json.LocationBody
 import id.emergence.wher.data.remote.json.LoginBody
 import id.emergence.wher.data.remote.json.MessageResponse
@@ -64,8 +64,8 @@ interface ApiService {
     @GET("profile/{id}")
     suspend fun fetchProfile(
         @Header("Authorization") token: String,
-        @Path("id") id: Int,
-    ): Response<FriendResponse>
+        @Path("id") id: String,
+    ): Response<UserResponse>
 
     // #14
     @DELETE("profile/remove")
@@ -83,7 +83,7 @@ interface ApiService {
         @Query("q") q: String,
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
-    ): Response<List<UserResponse>>
+    ): Response<PaginationResponse<UserResponse>>
 
     // #10
     @GET("friends/request")
@@ -120,7 +120,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
-    ): Response<List<UserResponse>>
+    ): Response<PaginationResponse<UserResponse>>
 
     // #13
     @DELETE("friends/{id}/remove")
@@ -138,7 +138,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Query("offset") offset: Int = 0,
         @Query("limit") limit: Int = 10,
-    ): Response<PaginationResponse<UserResponse>>
+    ): Response<PaginationResponse<FriendLocationResponse>>
 
     // #16
     @PUT("locations")
