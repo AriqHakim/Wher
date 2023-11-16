@@ -107,7 +107,7 @@ dependencies {
     /*
     unit & integration tests
      */
-    testImplementation(libs.junit)
+    testImplementation(libs.bundles.unitTest)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
