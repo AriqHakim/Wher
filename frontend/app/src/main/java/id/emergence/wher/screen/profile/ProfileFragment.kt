@@ -115,12 +115,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             tvEmail.text = data.email
             tvUsername.text = data.username
             edDisplayName.setText(data.name)
+            val imgUrl = data.photoUrl.ifEmpty { hashEmail(data.email) }
 
             ivAvatar.apply {
                 val imgData =
                     ImageRequest
                         .Builder(requireContext())
-                        .data("https://gravatar.com/avatar/${hashEmail(data.email)}")
+                        .data(imgUrl)
                         .target(this)
                         .allowHardware(true)
                         .transformations(
