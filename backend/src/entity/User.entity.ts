@@ -62,10 +62,10 @@ export class User {
   user2?: UserFriend[];
 
   @OneToMany(() => FriendRequest, (u) => u.requester)
-  requester?: UserFriend[];
+  requester?: FriendRequest[];
 
   @OneToMany(() => FriendRequest, (u) => u.target)
-  target?: UserFriend[];
+  target?: FriendRequest[];
 
   @OneToOne(() => Location, (l) => l.user)
   location?: Location;
