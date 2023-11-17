@@ -39,7 +39,13 @@ class UserPagingAdapter(
             if (data == null) return
             with(binding) {
                 root.setOnClickListener { onClick(data) }
-                val imgUrl = data.photoUrl.ifEmpty { hashEmail(data.email) }
+                val imgUrl = if(data.photoUrl.isNotEmpty()) {
+                    data.photoUrl
+                }else if(data.email.isNotEmpty()) {
+                    hashEmail(data.email)
+                }else {
+                    "https://placekitten.com/144/144"
+                }
                 ivAvatar.apply {
                     val imgData =
                         ImageRequest

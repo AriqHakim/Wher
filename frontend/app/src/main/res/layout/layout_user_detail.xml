@@ -16,7 +16,7 @@
         tools:src="@drawable/sample_avatar" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_edit_image"
+        android:id="@+id/btn_edit_profile"
         android:layout_width="42dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"

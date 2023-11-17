@@ -2,6 +2,7 @@ package id.emergence.wher.data.remote.json
 
 import id.emergence.wher.domain.model.FriendRequestStatus
 import id.emergence.wher.domain.model.User
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,7 +12,7 @@ data class UserResponse(
     val email: String = "",
     val username: String = "",
     val name: String = "",
-    val photoUrl: String = "",
+   @SerialName("photoURL") val photoUrl: String = "",
     val isFriend: Boolean = false,
     val requester: Boolean = false,
     val requestStatus: String = "",

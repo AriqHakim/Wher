@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
-    private val auth: AuthRepository,
-    private val profile: ProfileRepository,
+    private val authRepo: AuthRepository,
+    private val profileRepo: ProfileRepository,
 ) : BaseViewModel() {
     private val mutableUser: MutableStateFlow<User?> = MutableStateFlow(null)
     val user = mutableUser.asStateFlow()
@@ -27,8 +27,7 @@ class ProfileViewModel(
     private fun fetchProfile() {
         viewModelScope.launch {
             OneTimeEvent.Loading.send()
-            profile
-                .fetchProfile()
+            profileRepo.fetchProfile()
                 .catch { OneTimeEvent.Error(it).send() }
                 .collect { result ->
                     if (result.isSuccess) {
@@ -43,7 +42,7 @@ class ProfileViewModel(
 
     fun onLogout() {
         viewModelScope.launch {
-            auth.logout()
+            authRepo.logout()
             LogoutSuccess.send()
         }
     }

@@ -37,10 +37,9 @@
         tools:src="@drawable/sample_avatar" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_edit_image"
+        android:id="@+id/btn_edit_profile"
         android:layout_width="42dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
         android:layout_marginStart="-32dp"
         app:backgroundTint="@color/brand_yellow"
         app:icon="@drawable/ic_edit"
@@ -133,48 +132,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
-    <FrameLayout
-        android:id="@+id/layout_display_name"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/tv_display_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="64dp"
-        android:layout_marginTop="9dp"
-        android:padding="5dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/brand_green"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbl_display_email">
-
-        <EditText
-            android:id="@+id/ed_display_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_edit_text"
-            android:enabled="false"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:textAlignment="center"
-            android:textColor="@color/brand_purple"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lbl_display_email"
-            tools:text="Shigurere" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_confirm_display_name"
-            android:layout_width="42dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            app:backgroundTint="@color/brand_yellow"
-            app:icon="@drawable/ic_edit"
-            app:iconGravity="textStart"
-            app:iconPadding="@null"
-            app:iconTint="@color/brand_purple"
-            app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
-
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@id/lbl_display_email"
+        tools:text="Shigurere" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_logout"
@@ -191,7 +159,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_display_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_display_name"
         app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
 
     <com.google.android.material.button.MaterialButton

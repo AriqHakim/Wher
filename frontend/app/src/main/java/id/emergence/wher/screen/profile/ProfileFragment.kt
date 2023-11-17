@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import logcat.logcat
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -114,8 +115,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             tvUserId.text = "#${data.userId}"
             tvEmail.text = data.email
             tvUsername.text = data.username
-            edDisplayName.setText(data.name)
-            val imgUrl = data.photoUrl.ifEmpty { hashEmail(data.email) }
+            tvDisplayName.text = data.name
+            val imgUrl = if(data.photoUrl.isNotEmpty()) {
+                data.photoUrl
+            }else if(data.email.isNotEmpty()) {
+                hashEmail(data.email)
+            }else {
+                "https://placekitten.com/144/144"
+            }
 
             ivAvatar.apply {
                 val imgData =
@@ -128,7 +135,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                             listOf(
                                 CircleCropTransformation(),
                             ),
-                        ).build()
+                        )
+                        .build()
                 imageLoader.enqueue(imgData)
             }
         }
