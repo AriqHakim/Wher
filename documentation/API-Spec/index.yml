@@ -1,9 +1,10 @@
 openapi: '3.0.2'
 info:
-  title: API Title
+  title: Wher Backend
   version: '1.0'
 servers:
   - url: http://localhost:3031
+  - url: https://wher-backend.fly.dev/
 tags:
   - name: auth
     description: Autentikasi dan akun
