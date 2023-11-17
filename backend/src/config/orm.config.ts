@@ -17,7 +17,10 @@ const AppDataSource: DataSource = new DataSource({
   port: parseInt(process.env.DB_PORT),
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  database:
+    process.env.ENVIRONTMENT === 'production'
+      ? process.env.DB_NAME
+      : process.env.DB_TEST,
   entities: [User, UserFriend, FriendRequest, Location],
   migrations: [
     Users1695714925182,
