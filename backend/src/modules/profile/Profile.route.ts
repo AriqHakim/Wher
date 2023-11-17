@@ -8,7 +8,7 @@ import { editProfile } from './presentation/EditProfile.presentation';
 const router = express.Router();
 
 router.get('/profile', getMyProfile);
-router.put('/profile', upload.single('image'), editProfile);
+router.put('/profile', upload.single('file'), editProfile);
 router.get('/profile/:id', getProfileById);
 router.delete('/profile/remove', removeAccount);
 
