@@ -1,10 +1,17 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.gradle.secrets)
     alias(libs.plugins.androidx.navigation.safeArgs)
+    alias(libs.plugins.kotlin.serialization)
 }
+
+val keystorePropertiesFile: File = rootProject.file("keystore.properties")
+val keystoreProperty = Properties()
+keystoreProperty.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "id.emergence.wher"
@@ -29,6 +36,22 @@ android {
 
         debug {
             applicationIdSuffix = ".debug"
+        }
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = keystoreProperty["debugKeyAlias"] as String
+            keyPassword = keystoreProperty["debugKeyPassword"] as String
+            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["debugKeyStore"])
+            storePassword = keystoreProperty["debugStorePassword"] as String
+        }
+
+        create("release") {
+            keyAlias = keystoreProperty["debugKeyAlias"] as String
+            keyPassword = keystoreProperty["debugKeyPassword"] as String
+            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["debugKeyStore"])
+            storePassword = keystoreProperty["debugStorePassword"] as String
         }
     }
 
@@ -85,6 +108,8 @@ dependencies {
      */
     implementation(libs.bundles.koin)
     implementation(libs.kotlinx.coroutines.android)
+    // datastore
+    implementation(libs.androidx.datastore)
     // remote
     implementation(libs.bundles.networking)
     // work
@@ -96,11 +121,16 @@ dependencies {
     implementation(libs.androidx.paging)
     implementation(libs.coil)
     implementation(libs.logcat)
+    // gms
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.maps.utils.ktx)
+    implementation(libs.maps.ktx)
 
     /*
     unit & integration tests
      */
-    testImplementation(libs.junit)
+    testImplementation(libs.bundles.unitTest)
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }

@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="md_theme_light_primary">#7048b0</color>
+    <color name="md_theme_light_onPrimary">#ffffff</color>
+    <color name="md_theme_light_primaryContainer">#ecdcff</color>
+    <color name="md_theme_light_onPrimaryContainer">#270058</color>
+    <color name="md_theme_light_secondary">#2f57c1</color>
+    <color name="md_theme_light_onSecondary">#ffffff</color>
+    <color name="md_theme_light_secondaryContainer">#dbe1ff</color>
+    <color name="md_theme_light_onSecondaryContainer">#00174c</color>
+    <color name="md_theme_light_tertiary">#7f525c</color>
+    <color name="md_theme_light_onTertiary">#ffffff</color>
+    <color name="md_theme_light_tertiaryContainer">#ffd9e0</color>
+    <color name="md_theme_light_onTertiaryContainer">#32101a</color>
+    <color name="md_theme_light_error">#ba1a1a</color>
+    <color name="md_theme_light_errorContainer">#ffffff</color>
+    <color name="md_theme_light_onError">#ffdad6</color>
+    <color name="md_theme_light_onErrorContainer">#410002</color>
+    <color name="md_theme_light_background">#fffbff</color>
+    <color name="md_theme_light_onBackground">#1d1b1e</color>
+    <color name="md_theme_light_outline">#7a757f</color>
+    <color name="md_theme_light_outlineVariant">#CFC5B4</color>
+    <color name="md_theme_light_surface">#fffbff</color>
+    <color name="md_theme_light_onSurface">#1d1b1e</color>
+    <color name="md_theme_light_surfaceVariant">#e8e0eb</color>
+    <color name="md_theme_light_onSurfaceVariant">#49454e</color>
 
+    <!--    other colors-->
+    <color name="brand_green">#48BF91</color>
+    <color name="brand_green2">#06D7A0</color>
+    <color name="brand_red">#F04770</color>
+    <color name="brand_white">#D2E2ED</color>
+    <color name="brand_yellow">#FFD167</color>
+    <color name="brand_light_blue">#95D8EB</color>
+    <color name="brand_blue">#1EAEE7</color>
+    <color name="brand_dark_green">#006486</color>
+    <color name="brand_dark_blue">#2A53BD</color>
+    <color name="brand_dark_blue_alt">#0076BE</color>
+    <color name="brand_purple">#7851B9</color>
 </resources>

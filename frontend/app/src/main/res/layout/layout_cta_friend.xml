@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@drawable/bg">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_end_friendship"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="End Friendship?"
+        android:textColor="@color/brand_purple"
+        app:backgroundTint="@color/brand_yellow"
+        app:iconGravity="textStart"
+        app:iconPadding="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
+</androidx.constraintlayout.widget.ConstraintLayout>
