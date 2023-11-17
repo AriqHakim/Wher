@@ -50,7 +50,8 @@ class FragmentViewBindingDelegate<T : ViewBinding> private constructor(
 
     private inner class FragmentLifecycleObserver : DefaultLifecycleObserver {
         override fun onCreate(owner: LifecycleOwner) {
-            fragment.viewLifecycleOwnerLiveData
+            fragment
+                .viewLifecycleOwnerLiveData
                 .observe(fragment) { viewLifecycleOwner: LifecycleOwner? ->
                     viewLifecycleOwner ?: return@observe
 
