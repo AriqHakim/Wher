@@ -1,9 +1,10 @@
 openapi: '3.0.2'
 info:
-  title: API Title
+  title: Wher Backend
   version: '1.0'
 servers:
   - url: http://localhost:3031
+  - url: https://wher-backend.fly.dev/
 tags:
   - name: auth
     description: Autentikasi dan akun
@@ -107,7 +108,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
@@ -117,6 +118,9 @@ paths:
                   type: string
                 confirmPassword:
                   type: string
+                file:
+                  type: string
+                  format: binary
       responses:
         '201':
           $ref: '#/components/responses/Success'
@@ -166,6 +170,8 @@ paths:
                     type: string
                   username: 
                     type: string
+                  name: 
+                    type: string
                   email: 
                     type: string
                   isFriend:
@@ -207,6 +213,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -238,7 +245,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
-  /friends/request/:
+  /friends/request:
     get:
       summary: "#10 As User, I can see my friend request"
       tags:
@@ -258,6 +265,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -277,14 +285,23 @@ paths:
                         properties:
                           id: 
                             type: string
-                          userId:
+                          status:
                             type: string
-                          username:
-                            type: string
-                          name:
-                            type: string
-                          photoURL:
-                            type: string
+                          requester: 
+                            type: object
+                            properties:
+                              id: 
+                                type: string
+                              userId:
+                                type: string
+                              username:
+                                type: string
+                              name:
+                                type: string
+                              photoURL:
+                                type: string
+                  total_data:
+                    type: number   
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -303,16 +320,6 @@ paths:
           schema:
             type: string
           required: true
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                cancel:
-                  type: boolean 
-                  default: false
       responses:
         '201':
           $ref: '#/components/responses/Success'
@@ -362,7 +369,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  /friends/:
+  /friends:
     get:
       summary: "#12 As user, I can see my friend list"
       tags:
@@ -382,6 +389,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -409,6 +417,8 @@ paths:
                             type: string
                           photoURL:
                             type: string
+                  total_data:
+                    type: number
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -434,7 +444,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-  /locations/:
+  /locations:
     get:
       summary: "#15 As user, I can see maps and my friends location"
       tags:
@@ -454,6 +464,7 @@ paths:
           name: limit
           schema:
             type: integer
+            default: 10
             minimum: 1
             maximum: 100
           required: false
@@ -465,7 +476,7 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
+                properties: 
                   data:
                     type: array
                     items:
@@ -477,10 +488,15 @@ paths:
                             type: string
                           photoURL:
                             type: string
-                          lat:
-                            type: number
-                          lon:
-                            type: number
+                          location: 
+                            type: object
+                            properties:
+                              lat:
+                                type: number
+                              lon:
+                                type: number
+                  total_data:
+                    type: number
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -495,9 +511,9 @@ paths:
         required: true
         content:
           application/json:
-            schema:
+            schema: 
               type: object
-              properties:
+              properties:   
                 lat:
                   type: number
                 lon:
