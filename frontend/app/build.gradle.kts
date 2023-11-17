@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +8,10 @@ plugins {
     alias(libs.plugins.androidx.navigation.safeArgs)
     alias(libs.plugins.kotlin.serialization)
 }
+
+val keystorePropertiesFile: File = rootProject.file("keystore.properties")
+val keystoreProperty = Properties()
+keystoreProperty.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "id.emergence.wher"
@@ -29,6 +36,22 @@ android {
 
         debug {
             applicationIdSuffix = ".debug"
+        }
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = keystoreProperty["debugKeyAlias"] as String
+            keyPassword = keystoreProperty["debugKeyPassword"] as String
+            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["debugKeyStore"])
+            storePassword = keystoreProperty["debugStorePassword"] as String
+        }
+
+        create("release") {
+            keyAlias = keystoreProperty["debugKeyAlias"] as String
+            keyPassword = keystoreProperty["debugKeyPassword"] as String
+            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["debugKeyStore"])
+            storePassword = keystoreProperty["debugStorePassword"] as String
         }
     }
 
