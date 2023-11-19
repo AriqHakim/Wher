@@ -320,6 +320,15 @@ paths:
           schema:
             type: string
           required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cancel:
+                  type: boolean
       responses:
         '201':
           $ref: '#/components/responses/Success'
