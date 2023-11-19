@@ -9,6 +9,15 @@ export async function upsertUser(user: User): Promise<User> {
 
 export async function getUserByID(id: string) {
   const options: FindOneOptions<User> = {
+    select: {
+      id: true,
+      email: true,
+      username: true,
+      userId: true,
+      name: true,
+      password: false,
+      photoURL: true,
+    },
     where: {
       id: id,
     },
