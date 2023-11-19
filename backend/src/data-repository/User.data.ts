@@ -69,7 +69,7 @@ export async function getUserByUserIdOrUsername(
   const options: FindManyOptions<User> = {
     select: {
       id: true,
-      email: false,
+      email: true,
       userId: true,
       username: true,
       name: true,

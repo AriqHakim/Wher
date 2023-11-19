@@ -11,7 +11,7 @@ export async function getMyProfile(req: Request, res: Response) {
 
     data.user = auth.user;
     delete data.user.id;
-    delete data.user.email;
+    delete data.user.password;
 
     res.status(200);
     res.send(data.user);
