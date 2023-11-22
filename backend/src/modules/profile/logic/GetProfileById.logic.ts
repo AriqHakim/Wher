@@ -26,9 +26,14 @@ export async function getProfileByIdLogic(data: GetProfileById) {
       : false;
 
   const FriendRequest = await checkFriendRequest(targetUser.id, data.user.id);
+  const targetRequest = await checkFriendRequest(data.user.id, targetUser.id);
+
   if (FriendRequest) {
     result.requester = true;
     result.requestStatus = FriendRequest.status;
+  } else if (targetRequest) {
+    result.requester = false;
+    result.requestStatus = targetRequest.status;
   } else {
     result.requester = false;
     result.requestStatus = 'none';
