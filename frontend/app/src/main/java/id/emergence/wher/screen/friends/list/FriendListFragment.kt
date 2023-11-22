@@ -102,7 +102,7 @@ class FriendListFragment : Fragment(R.layout.fragment_friend_list) {
             userAdapter =
                 UserPagingAdapter(imageLoader) { user ->
                     navigateTo(
-                        FriendListFragmentDirections.actionFriendListToDetail(user.id),
+                        FriendListFragmentDirections.actionFriendListToDetail(user.id, null),
                     )
                 }
             recyclerView.apply {

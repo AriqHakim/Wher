@@ -119,7 +119,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val imgUrl = if(data.photoUrl.isNotEmpty()) {
                 data.photoUrl
             }else if(data.email.isNotEmpty()) {
-                hashEmail(data.email)
+                "https://gravatar.com/avatar/${hashEmail(data.email)}"
             }else {
                 "https://placekitten.com/144/144"
             }

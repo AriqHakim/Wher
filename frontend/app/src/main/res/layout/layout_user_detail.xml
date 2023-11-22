@@ -126,4 +126,13 @@
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tv_display_name"
         tools:visibility="gone" />
+
+    <include
+        android:id="@+id/layout_cta_own_profile"
+        layout="@layout/layout_cta_own_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tv_display_name"
+        tools:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

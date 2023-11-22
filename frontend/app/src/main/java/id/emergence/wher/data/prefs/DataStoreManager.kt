@@ -20,15 +20,23 @@ class DataStoreManager(
                 prefs[Keys.SESSION_TOKEN_KEY] ?: ""
             }
 
-    suspend fun addSession(token: String) {
+    val userId : Flow<String>
+        get() =
+            prefsDataStore.data.map { prefs ->
+                prefs[Keys.SESSION_USER_ID] ?: ""
+            }
+
+    suspend fun addSession(token: String, id: String) {
         prefsDataStore.edit { prefs ->
             prefs[Keys.SESSION_TOKEN_KEY] = "Bearer $token"
+            prefs[Keys.SESSION_USER_ID] = id
         }
     }
 
     suspend fun clearSession() {
         prefsDataStore.edit { prefs ->
             prefs[Keys.SESSION_TOKEN_KEY] = ""
+            prefs[Keys.SESSION_USER_ID] = ""
         }
     }
 

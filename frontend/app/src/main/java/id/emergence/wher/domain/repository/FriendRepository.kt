@@ -14,6 +14,8 @@ interface FriendRepository {
 
     fun searchUsers(q: String): Flow<PagingData<User>>
 
+    fun fetchSessionUserId() : Flow<String>
+
     suspend fun requestFriend(
         id: String,
         cancel: Boolean,
