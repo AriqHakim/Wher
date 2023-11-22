@@ -21,6 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <com.google.android.material.chip.Chip
+        android:id="@+id/chip_last_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -76,5 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge"
-        app:tint="@null" />
+        app:tint="@null"
+        tools:src="@drawable/ic_play" />
 </androidx.constraintlayout.widget.ConstraintLayout>

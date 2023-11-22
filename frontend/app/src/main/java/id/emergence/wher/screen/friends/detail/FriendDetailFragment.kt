@@ -19,7 +19,6 @@ import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.ext.snackbar
 import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -78,13 +77,14 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
             tvUsername.text = data.username
             tvDisplayName.text = data.name
 
-            val imgUrl = if(data.photoUrl.isNotEmpty()) {
-                data.photoUrl
-            }else if(data.email.isNotEmpty()) {
-                "https://gravatar.com/avatar/${hashEmail(data.email)}"
-            }else {
-                "https://placekitten.com/144/144"
-            }
+            val imgUrl =
+                if (data.photoUrl.isNotEmpty()) {
+                    data.photoUrl
+                } else if (data.email.isNotEmpty()) {
+                    "https://gravatar.com/avatar/${hashEmail(data.email)}"
+                } else {
+                    "https://placekitten.com/144/144"
+                }
 
             ivAvatar.apply {
                 val imgData =
@@ -101,9 +101,9 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
                 imageLoader.enqueue(imgData)
             }
             val isOwnAccount = viewModel.sessionUserId.value == data.userId
-            if(isOwnAccount) {
+            if (isOwnAccount) {
                 layoutCtaOwnProfile.root.isVisible = true
-            }else {
+            } else {
                 // if not own account
                 toggleCta(data.friendState)
                 when (data.friendState) {
@@ -153,13 +153,13 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
 
     private fun handleIncomingState(username: String) {
         with(binding.layoutDetail.layoutCtaIncomingRequest) {
-            if(viewModel.hasRequestId) {
+            if (viewModel.hasRequestId) {
                 lblSubtitle.text = "$username has sent you a friend request"
                 btnAcceptRequest.setOnClickListener { viewModel.acceptFriendRequest() }
                 btnRejectRequest.setOnClickListener { viewModel.rejectFriendRequest() }
             } else {
                 lblSubtitle.text = "$username has sent you a friend request, find it in friend request page!"
-                btnAcceptRequest.isVisible= false
+                btnAcceptRequest.isVisible = false
                 btnRejectRequest.isVisible = false
             }
         }

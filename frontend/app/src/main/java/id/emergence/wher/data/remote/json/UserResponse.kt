@@ -12,7 +12,7 @@ data class UserResponse(
     val email: String = "",
     val username: String = "",
     val name: String = "",
-   @SerialName("photoURL") val photoUrl: String = "",
+    @SerialName("photoURL") val photoUrl: String = "",
     val isFriend: Boolean = false,
     val requester: Boolean = false,
     val requestStatus: String = "",

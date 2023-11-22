@@ -28,8 +28,9 @@ class FriendDetailViewModel(
     init {
         fetchDetail()
         viewModelScope.launch {
-            repo.fetchSessionUserId()
-                .collect{
+            repo
+                .fetchSessionUserId()
+                .collect {
                     mutableSessionUserId.emit(it)
                 }
         }

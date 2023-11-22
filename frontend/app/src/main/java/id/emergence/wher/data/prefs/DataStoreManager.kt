@@ -20,13 +20,40 @@ class DataStoreManager(
                 prefs[Keys.SESSION_TOKEN_KEY] ?: ""
             }
 
-    val userId : Flow<String>
+    val userId: Flow<String>
         get() =
             prefsDataStore.data.map { prefs ->
                 prefs[Keys.SESSION_USER_ID] ?: ""
             }
 
-    suspend fun addSession(token: String, id: String) {
+    val isSharingLocation
+        get() =
+            prefsDataStore.data.map { prefs ->
+                prefs[Keys.SESSION_IS_SHARING_LOCATION] ?: true
+            }
+
+    val lastSharingTime
+        get() =
+            prefsDataStore.data.map { prefs ->
+                prefs[Keys.SESSION_LAST_SHARING_TIME] ?: ""
+            }
+
+    suspend fun setSharingLocation(flag: Boolean) {
+        prefsDataStore.edit { prefs ->
+            prefs[Keys.SESSION_IS_SHARING_LOCATION] = flag
+        }
+    }
+
+    suspend fun updateLastSharingTime(str: String) {
+        prefsDataStore.edit { prefs ->
+            prefs[Keys.SESSION_LAST_SHARING_TIME] = str
+        }
+    }
+
+    suspend fun addSession(
+        token: String,
+        id: String,
+    ) {
         prefsDataStore.edit { prefs ->
             prefs[Keys.SESSION_TOKEN_KEY] = "Bearer $token"
             prefs[Keys.SESSION_USER_ID] = id

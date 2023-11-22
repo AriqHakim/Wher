@@ -27,7 +27,8 @@ class ProfileViewModel(
     private fun fetchProfile() {
         viewModelScope.launch {
             OneTimeEvent.Loading.send()
-            profileRepo.fetchProfile()
+            profileRepo
+                .fetchProfile()
                 .catch { OneTimeEvent.Error(it).send() }
                 .collect { result ->
                     if (result.isSuccess) {

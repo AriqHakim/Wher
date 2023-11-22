@@ -23,6 +23,10 @@ import id.emergence.wher.utils.viewbinding.viewBinding
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
     private val binding by viewBinding<FragmentSplashBinding>()
+    private val locationPermissionLauncher =
+        requestLocationPermissionLauncher {
+            // do nothing
+        }
 
     override fun onViewCreated(
         view: View,
@@ -61,6 +65,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             lblSignUp.setOnClickListener {
                 navigateTo(SplashFragmentDirections.actionSplashToRegister())
             }
+        }
+        if (!checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) || !checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            requestLocationPermission(locationPermissionLauncher)
         }
     }
 

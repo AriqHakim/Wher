@@ -13,6 +13,8 @@ import id.emergence.wher.domain.model.Location
 import id.emergence.wher.domain.repository.LocationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class LocationRepositoryImpl(
     private val api: ApiService,
@@ -33,7 +35,16 @@ class LocationRepositoryImpl(
         prefs.token.flatMapLatest { token ->
             wrapFlowApiCall {
                 val response = apiRequest { api.updateLocation(token, LocationBody(data.lat, data.lon)) }
+                prefs.updateLastSharingTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
                 Result.success(response.message)
             }
         }
+
+    override suspend fun toggleSharingLocation(flag: Boolean) {
+        prefs.setSharingLocation(flag)
+    }
+
+    override fun checkIsSharingLocation(): Flow<Boolean> = prefs.isSharingLocation
+
+    override fun getLastSharingTime(): Flow<String> = prefs.lastSharingTime
 }
