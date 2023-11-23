@@ -8,8 +8,9 @@ import kotlinx.serialization.Serializable
 data class FriendLocationResponse(
     val id: String,
     val username: String,
+    val email: String,
     @SerialName("photoURL") val photoUrl: String,
     val location: LocationResponse,
 )
 
-fun FriendLocationResponse.asModel() = FriendLocation(id, username, photoUrl, location.asModel())
+fun FriendLocationResponse.asModel() = FriendLocation(id, username, email, photoUrl, location.asModel())

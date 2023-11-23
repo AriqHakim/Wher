@@ -8,6 +8,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import logcat.logcat
+import kotlin.math.ceil
 
 private fun Fragment.createSnackbar(
     message: String,
@@ -38,3 +39,7 @@ fun Fragment.hideKeyboard() {
         logcat { e.message.toString() }
     }
 }
+
+fun Fragment.dp(value: Float): Float = ceil(resources.displayMetrics.density * value)
+
+fun Fragment.dp(value: Int): Int = ceil(resources.displayMetrics.density * value).toInt()

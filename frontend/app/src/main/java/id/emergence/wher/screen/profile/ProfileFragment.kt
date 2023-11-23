@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayout.Tab
 import id.emergence.wher.R
 import id.emergence.wher.databinding.FragmentProfileBinding
 import id.emergence.wher.domain.model.User
-import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.ext.navigateTo
 import id.emergence.wher.ext.snackbar
 import id.emergence.wher.ext.toast
@@ -135,20 +134,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             tvEmail.text = data.email
             tvUsername.text = data.username
             tvDisplayName.text = data.name
-            val imgUrl =
-                if (data.photoUrl.isNotEmpty()) {
-                    data.photoUrl
-                } else if (data.email.isNotEmpty()) {
-                    "https://gravatar.com/avatar/${hashEmail(data.email)}"
-                } else {
-                    "https://placekitten.com/144/144"
-                }
 
             ivAvatar.apply {
                 val imgData =
                     ImageRequest
                         .Builder(requireContext())
-                        .data(imgUrl)
+                        .data(data.imgUrl)
                         .target(this)
                         .allowHardware(true)
                         .transformations(

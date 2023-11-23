@@ -19,7 +19,6 @@ import id.emergence.wher.R
 import id.emergence.wher.databinding.FragmentEditProfileBinding
 import id.emergence.wher.domain.model.ProfileData
 import id.emergence.wher.domain.model.User
-import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.ext.snackbar
 import id.emergence.wher.ext.toast
 import id.emergence.wher.screen.profile.edit.EditProfileViewModel.UpdateProfileSucceed
@@ -135,20 +134,11 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     private fun loadProfile(data: User) {
         with(binding) {
             edDisplayName.setText(data.name)
-            val imgUrl =
-                if (data.photoUrl.isNotEmpty()) {
-                    data.photoUrl
-                } else if (data.email.isNotEmpty()) {
-                    "https://gravatar.com/avatar/${hashEmail(data.email)}"
-                } else {
-                    "https://placekitten.com/144/144"
-                }
-
             ivAvatar.apply {
                 val imgData =
                     ImageRequest
                         .Builder(requireContext())
-                        .data(imgUrl)
+                        .data(data.imgUrl)
                         .target(this)
                         .allowHardware(true)
                         .transformations(

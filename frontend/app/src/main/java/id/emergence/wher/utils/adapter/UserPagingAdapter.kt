@@ -9,7 +9,6 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import id.emergence.wher.databinding.ItemUserBinding
 import id.emergence.wher.domain.model.User
-import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.utils.adapter.UserPagingAdapter.UserViewHolder
 import id.emergence.wher.utils.viewbinding.viewBinding
 
@@ -39,19 +38,11 @@ class UserPagingAdapter(
             if (data == null) return
             with(binding) {
                 root.setOnClickListener { onClick(data) }
-                val imgUrl =
-                    if (data.photoUrl.isNotEmpty()) {
-                        data.photoUrl
-                    } else if (data.email.isNotEmpty()) {
-                        "https://gravatar.com/avatar/${hashEmail(data.email)}"
-                    } else {
-                        "https://placekitten.com/144/144"
-                    }
                 ivAvatar.apply {
                     val imgData =
                         ImageRequest
                             .Builder(this.context)
-                            .data(imgUrl)
+                            .data(data.imgUrl)
                             .target(this)
                             .transformations(CircleCropTransformation())
                             .allowHardware(true)

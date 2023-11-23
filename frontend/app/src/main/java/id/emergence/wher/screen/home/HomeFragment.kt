@@ -5,6 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapShader
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.RectF
+import android.graphics.Shader
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +22,7 @@ import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmapOrNull
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
@@ -21,11 +30,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.transform.CircleCropTransformation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -36,6 +49,8 @@ import com.google.maps.android.ktx.awaitMap
 import id.emergence.wher.R
 import id.emergence.wher.data.worker.LocationSharingWorker
 import id.emergence.wher.databinding.FragmentHomeBinding
+import id.emergence.wher.domain.model.FriendLocation
+import id.emergence.wher.ext.dp
 import id.emergence.wher.ext.navigateTo
 import id.emergence.wher.ext.snackbar
 import id.emergence.wher.ext.toast
@@ -47,14 +62,24 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import logcat.logcat
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import id.emergence.wher.domain.model.Location as ModelLocation
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment :
+    Fragment(
+        id
+            .emergence
+            .wher
+            .R
+            .layout
+            .fragment_home,
+    ) {
     private val binding by viewBinding<FragmentHomeBinding>()
     private val viewModel by viewModel<HomeViewModel>()
+    private val imageLoader by inject<ImageLoader>()
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -153,12 +178,53 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
                     mMap.addMarker {
                         position(latLng)
-                        title(data.username)
-                        snippet("#${data.id}")
+                        icon(BitmapDescriptorFactory.fromBitmap(drawMarker(data)))
+                        title("@${data.username}")
                     }
                 }
             }
         }
+
+    private suspend fun drawMarker(data: FriendLocation): Bitmap {
+        var bitmap: Bitmap? = null
+        val request =
+            ImageRequest
+                .Builder(requireContext())
+                .data(data.imgUrl)
+                .allowHardware(false)
+                .size(57)
+                .transformations(CircleCropTransformation())
+                .target(
+                    onSuccess = { result ->
+                        bitmap = result.toBitmapOrNull()
+                    },
+                ).build()
+        imageLoader.execute(request)
+
+        val bmp = Bitmap.createBitmap(dp(62), dp(76), Bitmap.Config.ARGB_8888)
+        bmp.eraseColor(Color.TRANSPARENT)
+        val canvas = Canvas(bmp)
+        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.marker_pin)
+        drawable?.setBounds(0, 0, dp(62), dp(76))
+        drawable?.draw(canvas)
+
+        val roundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        val bitmapRect = RectF()
+        canvas.save()
+
+        bitmap?.let {
+            val shader = BitmapShader(it, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+            val matrix = Matrix()
+            val scale = dp(52f) / (it.width.toFloat())
+            matrix.postScale(scale, scale)
+            matrix.postTranslate(dp(5f), dp(5f))
+            roundPaint.shader = shader
+            shader.setLocalMatrix(matrix)
+            bitmapRect.set(dp(5f), dp(5f), dp(57f), dp(57f))
+            canvas.drawRoundRect(bitmapRect, dp(26f), dp(26f), roundPaint)
+        }
+        return bmp
+    }
 
     private fun observeIsSharingState() =
         viewLifecycleOwner.lifecycleScope.launch {
@@ -243,7 +309,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     )
                     mMap.addMarker {
                         position(currentLocation)
-                        title("Lokasi kamu sekarang")
+                        title("Your location")
                     }
                 }
             }

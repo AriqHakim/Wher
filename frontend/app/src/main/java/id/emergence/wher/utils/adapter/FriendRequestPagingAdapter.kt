@@ -9,7 +9,6 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import id.emergence.wher.databinding.ItemUserBinding
 import id.emergence.wher.domain.model.FriendRequest
-import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.utils.adapter.FriendRequestPagingAdapter.FriendRequestViewHolder
 import id.emergence.wher.utils.viewbinding.viewBinding
 
@@ -53,14 +52,6 @@ class FriendRequestPagingAdapter(
             with(binding) {
                 root.setOnClickListener { onClick(data) }
                 with(data.requester) {
-                    val imgUrl =
-                        if (this.photoUrl.isNotEmpty()) {
-                            this.photoUrl
-                        } else if (this.email.isNotEmpty()) {
-                            "https://gravatar.com/avatar/${hashEmail(this.email)}"
-                        } else {
-                            "https://placekitten.com/144/144"
-                        }
                     ivAvatar.apply {
                         val imgData =
                             ImageRequest

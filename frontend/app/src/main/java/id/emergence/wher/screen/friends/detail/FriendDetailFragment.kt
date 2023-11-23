@@ -15,7 +15,6 @@ import id.emergence.wher.databinding.FragmentFriendDetailBinding
 import id.emergence.wher.domain.model.FriendRequestStatus
 import id.emergence.wher.domain.model.FriendState
 import id.emergence.wher.domain.model.User
-import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.ext.snackbar
 import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
@@ -77,20 +76,11 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
             tvUsername.text = data.username
             tvDisplayName.text = data.name
 
-            val imgUrl =
-                if (data.photoUrl.isNotEmpty()) {
-                    data.photoUrl
-                } else if (data.email.isNotEmpty()) {
-                    "https://gravatar.com/avatar/${hashEmail(data.email)}"
-                } else {
-                    "https://placekitten.com/144/144"
-                }
-
             ivAvatar.apply {
                 val imgData =
                     ImageRequest
                         .Builder(requireContext())
-                        .data(imgUrl)
+                        .data(data.imgUrl)
                         .target(this)
                         .allowHardware(true)
                         .transformations(

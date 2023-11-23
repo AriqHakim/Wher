@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -44,9 +44,9 @@
         android:layout_width="144dp"
         android:layout_height="144dp"
         android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lbl_title"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:src="@drawable/sample_avatar" />
 
     <com.google.android.material.button.MaterialButton
@@ -87,13 +87,13 @@
         android:inputType="textEmailAddress"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
-        tools:text="Shigurere"
         android:textAlignment="center"
         android:textColor="@color/brand_purple"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbl_display_name" />
+        app:layout_constraintTop_toBottomOf="@id/lbl_display_name"
+        tools:text="Shigurere" />
 
     <TextView
         android:id="@+id/lbl_password"
@@ -160,10 +160,10 @@
         app:backgroundTint="@color/brand_green"
         app:iconGravity="textStart"
         app:iconPadding="@null"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_confirm_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_confirm_password"
         app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
 </androidx.constraintlayout.widget.ConstraintLayout>
