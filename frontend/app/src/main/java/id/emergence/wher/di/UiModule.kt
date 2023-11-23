@@ -10,6 +10,7 @@ import id.emergence.wher.screen.friends.request.FriendRequestViewModel
 import id.emergence.wher.screen.friends.search.FriendSearchViewModel
 import id.emergence.wher.screen.home.HomeViewModel
 import id.emergence.wher.screen.profile.ProfileViewModel
+import id.emergence.wher.screen.profile.edit.EditProfileViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -25,6 +26,7 @@ val uiModule =
         viewModelOf(::FriendListViewModel)
         viewModelOf(::FriendSearchViewModel)
         viewModelOf(::ProfileViewModel)
+        viewModelOf(::EditProfileViewModel)
         viewModelOf(::HomeViewModel)
 
         single {

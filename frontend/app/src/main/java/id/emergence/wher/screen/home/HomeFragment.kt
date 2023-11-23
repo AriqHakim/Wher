@@ -197,6 +197,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 } else {
                     binding.chipLastUpdate.text = "Last updated : null"
                 }
+                viewModel.fetchLocations()
             }
         }
 

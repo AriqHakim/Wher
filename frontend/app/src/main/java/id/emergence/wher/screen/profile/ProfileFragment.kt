@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.Tab
 import id.emergence.wher.R
@@ -17,6 +18,8 @@ import id.emergence.wher.domain.model.User
 import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.ext.navigateTo
 import id.emergence.wher.ext.snackbar
+import id.emergence.wher.ext.toast
+import id.emergence.wher.screen.profile.ProfileViewModel.AccountDeletionSuccess
 import id.emergence.wher.screen.profile.ProfileViewModel.LogoutSuccess
 import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
@@ -39,6 +42,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             .onEach { event ->
                 when (event) {
                     LogoutSuccess -> {
+                        toast("Logged out!")
+                        navigateTo(ProfileFragmentDirections.actionProfileToSplash())
+                    }
+                    AccountDeletionSuccess -> {
+                        toast("Delete account success!")
                         navigateTo(ProfileFragmentDirections.actionProfileToSplash())
                     }
                     OneTimeEvent.Loading -> {
@@ -91,11 +99,23 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 },
             )
 
+            btnEditProfile.setOnClickListener {
+                navigateTo(ProfileFragmentDirections.actionProfileToEdit())
+            }
+
             btnLogout.setOnClickListener {
                 viewModel.onLogout()
             }
+            btnDeleteAccount.setOnClickListener {
+                showDeleteAccountDialog()
+            }
         }
         profileObserver()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchProfile()
     }
 
     private fun profileObserver() =
@@ -139,5 +159,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 imageLoader.enqueue(imgData)
             }
         }
+    }
+
+    private fun showDeleteAccountDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .apply {
+                setTitle("Delete Account")
+                setMessage("Account deletion is a one way ticket. Are you sure you want to delete this account?")
+                setPositiveButton("Yes") { _, _ ->
+                    viewModel.deleteAccount()
+                }
+                setNegativeButton("Cancel") { _, _ ->
+                    // do nothing
+                }
+            }.show()
     }
 }

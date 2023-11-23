@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import logcat.logcat
 import java.time.Duration
 import id.emergence.wher.domain.model.Location as ModelLocation
 
@@ -50,6 +51,7 @@ class LocationSharingWorker(
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override suspend fun doWork(): Result {
+        logcat { "doWork() - sharing location" }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         return try {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->

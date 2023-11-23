@@ -30,7 +30,7 @@ class HomeViewModel(
         fetchLocations()
     }
 
-    private fun fetchLocations() {
+    fun fetchLocations() {
         viewModelScope.launch {
             val currentLocations = mLocations.value
             repo
