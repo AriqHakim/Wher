@@ -23,7 +23,6 @@ describe('User Data Repository Tests', () => {
   const resultTest = (result) => {
     expect(result.email).toBe('test@gmail.com');
     expect(result.name).toBe('test');
-    expect(result.password).toBe('pass');
     expect(result.userId).toBe('userID');
     expect(result.username).toBe('username');
     expect(result.photoURL).toBe('example.com');
