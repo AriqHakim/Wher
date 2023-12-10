@@ -5,6 +5,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
+import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import logcat.logcat
@@ -30,6 +31,11 @@ fun Fragment.toast(
 }
 
 fun Fragment.navigateTo(directions: NavDirections) = findNavController().navigate(directions)
+
+fun Fragment.navigateTo(
+    directions: NavDirections,
+    extras: Navigator.Extras,
+) = findNavController().navigate(directions, extras)
 
 fun Fragment.hideKeyboard() {
     try {

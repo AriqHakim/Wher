@@ -1,6 +1,7 @@
 package id.emergence.wher.screen.profile
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import android.widget.ImageView
 import androidx.core.view.isVisible
@@ -45,6 +46,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         navigateTo(ProfileFragmentDirections.actionProfileToSplash())
                     }
                     AccountDeletionSuccess -> {
+                        toggleLoading(false)
                         toast("Delete account success!")
                         navigateTo(ProfileFragmentDirections.actionProfileToSplash())
                     }
@@ -67,17 +69,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        postponeEnterTransition()
+
         with(binding) {
+            startPostponedEnterTransition()
             val tabProfile = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabProfile.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_profile)
             val tabFriends = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabFriends.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_friends)
 
-            tabLayout.addTab(
-                tabLayout.newTab().setCustomView(tabProfile).also {
-                    it.select()
-                },
-            )
+            tabLayout.addTab(tabLayout.newTab().setCustomView(tabProfile))
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabFriends))
             tabLayout.addOnTabSelectedListener(
                 object : OnTabSelectedListener {
@@ -94,6 +97,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
 
                     override fun onTabReselected(tab: Tab?) {
+                        when (tab?.position) {
+                            1 -> navigateTo(ProfileFragmentDirections.actionProfileToFriendList())
+                            else -> {
+                                // do nothing
+                            }
+                        }
                     }
                 },
             )

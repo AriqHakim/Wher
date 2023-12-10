@@ -17,6 +17,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.transition.TransitionInflater
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
@@ -27,6 +28,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -41,6 +43,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.Tab
@@ -68,15 +71,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import id.emergence.wher.domain.model.Location as ModelLocation
 
-class HomeFragment :
-    Fragment(
-        id
-            .emergence
-            .wher
-            .R
-            .layout
-            .fragment_home,
-    ) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding by viewBinding<FragmentHomeBinding>()
     private val viewModel by viewModel<HomeViewModel>()
     private val imageLoader by inject<ImageLoader>()
@@ -84,6 +79,9 @@ class HomeFragment :
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val locationPermissionLauncher = requestLocationPermissionLauncher { showCurrentLocation() }
+
+    private var currentLocationMarker: Marker? = null
+    private var friendsLocationMarkers = mutableListOf<Marker>()
 
     override fun onStart() {
         super.onStart()
@@ -109,11 +107,20 @@ class HomeFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        postponeEnterTransition()
         with(binding) {
+            startPostponedEnterTransition()
             val tabProfile = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabProfile.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_profile)
             val tabFriends = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabFriends.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_friends)
+
+            val sharedElementExtras =
+                FragmentNavigatorExtras(
+                    tabLayout to "tabLayout",
+                )
 
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabProfile))
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabFriends))
@@ -121,8 +128,8 @@ class HomeFragment :
                 object : OnTabSelectedListener {
                     override fun onTabSelected(tab: Tab?) {
                         when (tab?.position) {
-                            0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile())
-                            else -> navigateTo(HomeFragmentDirections.actionHomeToFriendList())
+                            0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile(), sharedElementExtras)
+                            else -> navigateTo(HomeFragmentDirections.actionHomeToFriendList(), sharedElementExtras)
                         }
                     }
 
@@ -131,7 +138,7 @@ class HomeFragment :
 
                     override fun onTabReselected(tab: Tab?) {
                         when (tab?.position) {
-                            0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile())
+                            0 -> navigateTo(HomeFragmentDirections.actionHomeToProfile(), sharedElementExtras)
                             else -> navigateTo(HomeFragmentDirections.actionHomeToFriendList())
                         }
                     }
@@ -176,11 +183,20 @@ class HomeFragment :
                 list.forEach { data ->
                     val latLng = LatLng(data.location.lat, data.location.lon)
 
-                    mMap.addMarker {
-                        position(latLng)
-                        icon(BitmapDescriptorFactory.fromBitmap(drawMarker(data)))
-                        title("@${data.username}")
+                    if (friendsLocationMarkers.size > 0) {
+                        friendsLocationMarkers.forEach {
+                            it.remove()
+                        }
+                        friendsLocationMarkers.clear()
                     }
+
+                    val marker =
+                        mMap.addMarker {
+                            position(latLng)
+                            icon(BitmapDescriptorFactory.fromBitmap(drawMarker(data)))
+                            title("@${data.username}")
+                        }
+                    marker?.let { friendsLocationMarkers.add(it) }
                 }
             }
         }
@@ -284,10 +300,12 @@ class HomeFragment :
         }
 
         mMap.uiSettings.apply {
-            isZoomControlsEnabled = true
-            isIndoorLevelPickerEnabled = true
-            isCompassEnabled = true
+            isZoomControlsEnabled = false
+            isIndoorLevelPickerEnabled = false
+            isCompassEnabled = false
             isRotateGesturesEnabled = true
+            isMyLocationButtonEnabled = false
+            isMapToolbarEnabled = false
         }
 
         showCurrentLocation()
@@ -307,10 +325,13 @@ class HomeFragment :
                             16f,
                         ),
                     )
-                    mMap.addMarker {
-                        position(currentLocation)
-                        title("Your location")
-                    }
+
+                    currentLocationMarker?.remove()
+                    currentLocationMarker =
+                        mMap.addMarker {
+                            position(currentLocation)
+                            title("Your location")
+                        }
                 }
             }
         } else {

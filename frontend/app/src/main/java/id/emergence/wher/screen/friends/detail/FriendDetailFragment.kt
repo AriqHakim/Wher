@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import id.emergence.wher.R
 import id.emergence.wher.databinding.FragmentFriendDetailBinding
 import id.emergence.wher.domain.model.FriendRequestStatus
@@ -136,7 +137,7 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
     private fun handleFriendState() {
         with(binding.layoutDetail.layoutCtaFriend) {
             btnEndFriendship.setOnClickListener {
-                viewModel.onRemoveFriend()
+                showRemoveFriendDialog()
             }
         }
     }
@@ -153,5 +154,19 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
                 btnRejectRequest.isVisible = false
             }
         }
+    }
+
+    private fun showRemoveFriendDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .apply {
+                setTitle("Remove Friend")
+                setMessage("Are you sure you want to remove this account from your friendlist?")
+                setPositiveButton("Yes") { _, _ ->
+                    viewModel.onRemoveFriend()
+                }
+                setNegativeButton("Cancel") { _, _ ->
+                    // do nothing
+                }
+            }.show()
     }
 }
