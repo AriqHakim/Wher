@@ -16,4 +16,5 @@ export class GetFriendRequestInterface {
 export class FriendRequestInterface {
   user: User;
   id: string;
+  cancel?: boolean;
 }

@@ -12,12 +12,13 @@ export async function friendRequest(req: Request, res: Response) {
 
     data.user = auth.user;
     data.id = req.params.id;
+    data.cancel = req.body.cancel;
 
     await friendRequestLogic(data);
 
     res.status(201);
     const result: ResponseBody<null> = {
-      message: 'Friend Request Successful!',
+      message: 'Operation Successful!',
     };
     res.send(result);
     return result;
