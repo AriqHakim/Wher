@@ -39,7 +39,7 @@ class FriendSearchFragment : Fragment(R.layout.fragment_friend_search) {
             userAdapter =
                 UserPagingAdapter(imageLoader) { user ->
                     navigateTo(
-                        FriendSearchFragmentDirections.actionFriendSearchToDetail(user.id),
+                        FriendSearchFragmentDirections.actionFriendSearchToDetail(user.id, null),
                     )
                 }
             recyclerView.apply {

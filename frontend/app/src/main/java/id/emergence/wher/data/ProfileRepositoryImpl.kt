@@ -10,6 +10,9 @@ import id.emergence.wher.domain.model.User
 import id.emergence.wher.domain.repository.ProfileRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class ProfileRepositoryImpl(
     private val api: ApiService,
@@ -24,11 +27,30 @@ class ProfileRepositoryImpl(
             }
         }
 
-    override fun updateProfile(data: ProfileData): Flow<Result<String>> {
-        TODO("Not yet implemented")
-    }
+    override fun updateProfile(data: ProfileData): Flow<Result<String>> =
+        prefs.token.flatMapLatest { token ->
+            wrapFlowApiCall {
+                if (data.file == null) throw IllegalStateException("File is null")
+                val requestBodyMap =
+                    hashMapOf(
+                        "name" to data.name.toRequestBody(),
+                        "password" to data.password.toRequestBody(),
+                        "confirmPassword" to data.confirmPassword.toRequestBody(),
+                    )
+                val photo = MultipartBody.Part.createFormData("file", data.file.name, data.file.asRequestBody())
+                val response =
+                    apiRequest {
+                        api.editProfile(token, requestBodyMap, photo)
+                    }
+                Result.success(response.message)
+            }
+        }
 
-    override fun deleteAccount(): Flow<Result<String>> {
-        TODO("Not yet implemented")
-    }
+    override fun deleteAccount(): Flow<Result<String>> =
+        prefs.token.flatMapLatest { token ->
+            wrapFlowApiCall {
+                val response = apiRequest { api.deleteAccount(token) }
+                Result.success(response.message)
+            }
+        }
 }
