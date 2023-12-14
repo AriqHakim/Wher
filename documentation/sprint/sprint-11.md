@@ -9,34 +9,33 @@
 
 ### Goals:
 
-- Unit testing API
-- Big fixing
-- Integrasi menu friends
-- Integrasi fitur share lokasi
+- Finalisasi Frontend
+- Bug fixing
+- Test Coverage Backend
 - Project Manager Tasks
-- Dokumentasi testing
+- Laporan Testing
 
 ### Breakdown Task:
 
 #### Commitment: 5 goals
 
 - Ariq Hakim:
-    - [ ] Unit testing API
-    - [ ] Bug fixing
+    - [x] Test Coverage Backend
+    - [x] Bug Fixing
 - Alvaro Dwi:
-    - [ ] Testing
+    - [x] Finalisasi Frontend
 - Rafiansyah Rasyid:
-    - [ ] Project Manager Tasks
+    - [x] Project Manager Tasks
 - Wildan Hanif:
-    - [ ] API Testing postman
+    - [x] Laporan Testing
 
-#### Delivered: 6 goals
+#### Delivered: 5 goals
 
 ### During Sprint
 
 2023-11-27:
 
-1. 
+1. Bing Chilling
 
 ### Notes Sprint Review
 
