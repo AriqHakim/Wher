@@ -10,7 +10,7 @@
 ### Goals:
 
 - Unit testing API
-- Big fixing
+- Bug fixing
 - Integrasi menu friends
 - Integrasi fitur share lokasi
 - Project Manager Tasks
@@ -21,15 +21,15 @@
 #### Commitment: 6 goals
 
 - Ariq Hakim:
-    - [ ] Unit testing API
-    - [ ] Big fixing
+    - [x] Unit testing API
+    - [x] Bug fixing
 - Alvaro Dwi:
-    - [ ] Integrasi fitur share lokasi
-    - [ ] Integrasi menu friends
+    - [x] Integrasi fitur share lokasi
+    - [x] Integrasi menu friends
 - Rafiansyah Rasyid:
-    - [ ] Project Manager Tasks
+    - [x] Project Manager Tasks
 - Wildan Hanif:
-    - [ ] API Testing postman
+    - [x] API Testing postman
 
 #### Delivered: - goals
 
