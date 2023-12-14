@@ -9,34 +9,31 @@
 
 ### Goals:
 
-- Unit testing API
+- Testing
 - Bug fixing
-- Manual testing
-- 
-- Project Manager Tasks
-- Dokumentasi testing
+- Release Beta
 
 ### Breakdown Task:
 
-#### Commitment: 6 goals
+#### Commitment: 3 goals
 
 - Ariq Hakim:
-    - [ ] Unit testing API
-    - [ ] Bug fixing
+    - [x] Testing
 - Alvaro Dwi:
-    - [ ] Fixing FE
+    - [x] Release Beta
+    - [x] Bug Fixing
 - Rafiansyah Rasyid:
-    - [ ] Test
+    - [x] Testing
 - Wildan Hanif:
-    - [ ] API Testing postman
+    - [x] Testing
 
-#### Delivered: 6 goals
+#### Delivered: 3 goals
 
 ### During Sprint
 
 2023-12-11:
 
-1. 
+1. Product sudah jadi based on feedback
 
 ### Notes Sprint Review
 
