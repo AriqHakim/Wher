@@ -9,6 +9,7 @@ import id.emergence.wher.utils.base.OneTimeEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
@@ -24,10 +25,13 @@ class ProfileViewModel(
 
     object LogoutSuccess : OneTimeEvent()
 
-    private fun fetchProfile() {
+    object AccountDeletionSuccess : OneTimeEvent()
+
+    fun fetchProfile() {
         viewModelScope.launch {
             OneTimeEvent.Loading.send()
-            profileRepo.fetchProfile()
+            profileRepo
+                .fetchProfile()
                 .catch { OneTimeEvent.Error(it).send() }
                 .collect { result ->
                     if (result.isSuccess) {
@@ -44,6 +48,23 @@ class ProfileViewModel(
         viewModelScope.launch {
             authRepo.logout()
             LogoutSuccess.send()
+        }
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            OneTimeEvent.Loading.send()
+            profileRepo
+                .deleteAccount()
+                .catch { OneTimeEvent.Error(it).send() }
+                .collectLatest { result ->
+                    if (result.isSuccess) {
+                        authRepo.logout()
+                        AccountDeletionSuccess.send()
+                    } else {
+                        OneTimeEvent.Error(result.exceptionOrNull()).send()
+                    }
+                }
         }
     }
 }

@@ -39,11 +39,13 @@ export async function getFriendsByUserLocation(
       id: true,
       user1: {
         id: true,
+        email: true,
         username: true,
         photoURL: true,
       },
       user2: {
         id: true,
+        email: true,
         username: true,
         photoURL: true,
       },
@@ -83,7 +85,7 @@ export async function getFriendsByUser(
         username: true,
         name: true,
         photoURL: true,
-        email: false,
+        email: true,
         password: false,
       },
       user2: {
@@ -92,7 +94,7 @@ export async function getFriendsByUser(
         username: true,
         name: true,
         photoURL: true,
-        email: false,
+        email: true,
         password: false,
       },
     },

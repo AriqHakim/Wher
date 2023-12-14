@@ -17,6 +17,22 @@ android {
     namespace = "id.emergence.wher"
     compileSdk = 34
 
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = keystoreProperty["debugKeyAlias"] as String
+            keyPassword = keystoreProperty["debugKeyPassword"] as String
+            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["debugKeyStore"])
+            storePassword = keystoreProperty["debugStorePassword"] as String
+        }
+
+        create("release") {
+            keyAlias = keystoreProperty["releaseKeyAlias"] as String
+            keyPassword = keystoreProperty["releaseKeyPassword"] as String
+            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["releaseKeyStore"])
+            storePassword = keystoreProperty["releaseStorePassword"] as String
+        }
+    }
+
     defaultConfig {
         applicationId = "id.emergence.wher"
         minSdk = 23
@@ -32,26 +48,12 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
 
         debug {
             applicationIdSuffix = ".debug"
-        }
-    }
-
-    signingConfigs {
-        getByName("debug") {
-            keyAlias = keystoreProperty["debugKeyAlias"] as String
-            keyPassword = keystoreProperty["debugKeyPassword"] as String
-            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["debugKeyStore"])
-            storePassword = keystoreProperty["debugStorePassword"] as String
-        }
-
-        create("release") {
-            keyAlias = keystoreProperty["debugKeyAlias"] as String
-            keyPassword = keystoreProperty["debugKeyPassword"] as String
-            storeFile = file(rootDir.canonicalPath + "/" + keystoreProperty["debugKeyStore"])
-            storePassword = keystoreProperty["debugStorePassword"] as String
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -121,6 +123,7 @@ dependencies {
     implementation(libs.androidx.paging)
     implementation(libs.coil)
     implementation(libs.logcat)
+    implementation(libs.imagepicker)
     // gms
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)

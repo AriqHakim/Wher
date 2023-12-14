@@ -23,7 +23,11 @@ class AuthRepositoryImpl(
                 apiRequest {
                     api.login(body)
                 }
-            prefs.addSession(response.token)
+            val profileResponse =
+                apiRequest {
+                    api.fetchProfile("Bearer ${response.token}")
+                }
+            prefs.addSession(response.token, profileResponse.userId)
             Result.success("Login berhasil!")
         }
 

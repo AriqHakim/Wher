@@ -67,7 +67,15 @@
             android:id="@+id/action_profile_to_splash"
             app:destination="@id/splashFragment"
             app:popUpTo="@id/nav_main" />
+        <action
+            android:id="@+id/action_profile_to_edit"
+            app:destination="@id/editProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="id.emergence.wher.screen.profile.edit.EditProfileFragment"
+        android:label="EditProfile"
+        tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/friendListFragment"
         android:name="id.emergence.wher.screen.friends.list.FriendListFragment"
@@ -95,6 +103,10 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <argument
+            android:name="requestId"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/friendRequestFragment"

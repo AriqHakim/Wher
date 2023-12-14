@@ -33,7 +33,7 @@ export async function searchFriendRequester(
       status: true,
       requester: {
         id: true,
-        email: false,
+        email: true,
         userId: true,
         username: true,
         name: true,

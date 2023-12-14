@@ -15,21 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/sample_avatar" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_edit_profile"
-        android:layout_width="42dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginStart="-32dp"
-        app:backgroundTint="@color/brand_yellow"
-        app:icon="@drawable/ic_edit"
-        app:iconGravity="textStart"
-        app:iconPadding="@null"
-        app:iconTint="@color/brand_purple"
-        app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
-        app:layout_constraintStart_toEndOf="@id/iv_avatar"
-        app:shapeAppearanceOverlay="?shapeAppearanceCornerExtraLarge" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -121,6 +106,15 @@
     <include
         android:id="@+id/layout_cta_friend"
         layout="@layout/layout_cta_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tv_display_name"
+        tools:visibility="gone" />
+
+    <include
+        android:id="@+id/layout_cta_own_profile"
+        layout="@layout/layout_cta_own_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"

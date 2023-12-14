@@ -1,6 +1,7 @@
 package id.emergence.wher.screen.friends.list
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
@@ -58,18 +59,20 @@ class FriendListFragment : Fragment(R.layout.fragment_friend_list) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        postponeEnterTransition()
+
         with(binding) {
+            startPostponedEnterTransition()
             val tabProfile = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabProfile.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_profile)
             val tabFriends = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabFriends.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_friends)
 
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabProfile))
-            tabLayout.addTab(
-                tabLayout.newTab().setCustomView(tabFriends).also {
-                    it.select()
-                },
-            )
+            tabLayout.addTab(tabLayout.newTab().setCustomView(tabFriends))
+            tabLayout.setScrollPosition(1, 0f, true)
             tabLayout.addOnTabSelectedListener(
                 object : OnTabSelectedListener {
                     override fun onTabSelected(tab: Tab?) {
@@ -85,6 +88,12 @@ class FriendListFragment : Fragment(R.layout.fragment_friend_list) {
                     }
 
                     override fun onTabReselected(tab: Tab?) {
+                        when (tab?.position) {
+                            0 -> navigateTo(FriendListFragmentDirections.actionFriendListToProfile())
+                            else -> {
+                                // do nothing
+                            }
+                        }
                     }
                 },
             )
@@ -102,7 +111,7 @@ class FriendListFragment : Fragment(R.layout.fragment_friend_list) {
             userAdapter =
                 UserPagingAdapter(imageLoader) { user ->
                     navigateTo(
-                        FriendListFragmentDirections.actionFriendListToDetail(user.id),
+                        FriendListFragmentDirections.actionFriendListToDetail(user.id, null),
                     )
                 }
             recyclerView.apply {

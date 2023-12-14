@@ -21,23 +21,23 @@
 #### Commitment: 6 goals
 
 - Ariq Hakim:
-    - [x] Unit testing API
-    - [x] Bug fixing
+    - [ ] Unit testing API
+    - [ ] Big fixing
 - Alvaro Dwi:
-    - [x] Integrasi fitur share lokasi
-    - [x] Integrasi menu friends
+    - [ ] Integrasi fitur share lokasi
+    - [ ] Integrasi menu friends
 - Rafiansyah Rasyid:
-    - [x] Project Manager Tasks
+    - [ ] Project Manager Tasks
 - Wildan Hanif:
-    - [x] API Testing postman
+    - [ ] API Testing postman
 
-#### Delivered: 6 goals
+#### Delivered: - goals
 
 ### During Sprint
 
-2023-11-20:
+2023-11-xx:
 
-1. 
+1.
 
 ### Notes Sprint Review
 

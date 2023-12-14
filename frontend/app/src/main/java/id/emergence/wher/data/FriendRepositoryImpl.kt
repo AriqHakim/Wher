@@ -71,6 +71,8 @@ class FriendRepositoryImpl(
             }.flow.map { pagingData -> pagingData.map { it.asModel() } }
         }
 
+    override fun fetchSessionUserId(): Flow<String> = prefs.userId
+
     override suspend fun requestFriend(
         id: String,
         cancel: Boolean,

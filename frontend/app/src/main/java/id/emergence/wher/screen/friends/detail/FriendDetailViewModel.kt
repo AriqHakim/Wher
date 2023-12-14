@@ -9,7 +9,6 @@ import id.emergence.wher.utils.base.OneTimeEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class FriendDetailViewModel(
@@ -17,12 +16,24 @@ class FriendDetailViewModel(
     handle: SavedStateHandle,
 ) : BaseViewModel() {
     private val id = handle.get<String>("id") ?: ""
+    private val requestId = handle.get<String>("requestId") ?: ""
+
+    private val mutableSessionUserId = MutableStateFlow("")
+    val sessionUserId = mutableSessionUserId.asStateFlow()
+    val hasRequestId get() = requestId.isNotEmpty()
 
     private val mutableUser = MutableStateFlow<User?>(null)
     val user = mutableUser.asStateFlow()
 
     init {
         fetchDetail()
+        viewModelScope.launch {
+            repo
+                .fetchSessionUserId()
+                .collect {
+                    mutableSessionUserId.emit(it)
+                }
+        }
     }
 
     fun fetchDetail() {
@@ -77,7 +88,7 @@ class FriendDetailViewModel(
         OneTimeEvent.Loading.send()
         viewModelScope.launch {
             repo
-                .acceptFriendRequest(id)
+                .acceptFriendRequest(requestId)
                 .catch { OneTimeEvent.Error(it).send() }
                 .collect { result ->
                     if (result.isSuccess) {
@@ -93,7 +104,7 @@ class FriendDetailViewModel(
         OneTimeEvent.Loading.send()
         viewModelScope.launch {
             repo
-                .rejectFriendRequest(id)
+                .rejectFriendRequest(requestId)
                 .catch { OneTimeEvent.Error(it).send() }
                 .collect { result ->
                     if (result.isSuccess) {

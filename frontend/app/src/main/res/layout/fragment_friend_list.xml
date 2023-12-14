@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tab_layout"
         app:maxImageSize="36dp"
-        app:tint="@color/brand_light_blue" />
+        app:tint="@color/brand_white" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:tabBackground="@drawable/tab_color_selector"
+        android:transitionName="tabLayout"
         tools:background="@drawable/tab_background_unselected"
         tools:minHeight="?actionBarSize" />
 

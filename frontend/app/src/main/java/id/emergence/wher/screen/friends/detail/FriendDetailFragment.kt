@@ -10,12 +10,12 @@ import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import id.emergence.wher.R
 import id.emergence.wher.databinding.FragmentFriendDetailBinding
 import id.emergence.wher.domain.model.FriendRequestStatus
 import id.emergence.wher.domain.model.FriendState
 import id.emergence.wher.domain.model.User
-import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.ext.snackbar
 import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
@@ -81,7 +81,7 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
                 val imgData =
                     ImageRequest
                         .Builder(requireContext())
-                        .data("https://gravatar.com/avatar/${hashEmail(data.email)}")
+                        .data(data.imgUrl)
                         .target(this)
                         .allowHardware(true)
                         .transformations(
@@ -91,11 +91,17 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
                         ).build()
                 imageLoader.enqueue(imgData)
             }
-            toggleCta(data.friendState)
-            when (data.friendState) {
-                FriendState.NOT_FRIEND -> handleNotFriendState(data.requestStatus == FriendRequestStatus.PENDING)
-                FriendState.FRIEND -> handleFriendState()
-                else -> handleIncomingState(data.username)
+            val isOwnAccount = viewModel.sessionUserId.value == data.userId
+            if (isOwnAccount) {
+                layoutCtaOwnProfile.root.isVisible = true
+            } else {
+                // if not own account
+                toggleCta(data.friendState)
+                when (data.friendState) {
+                    FriendState.NOT_FRIEND -> handleNotFriendState(data.requestStatus == FriendRequestStatus.PENDING)
+                    FriendState.FRIEND -> handleFriendState()
+                    else -> handleIncomingState(data.username)
+                }
             }
         }
     }
@@ -131,16 +137,36 @@ class FriendDetailFragment : Fragment(R.layout.fragment_friend_detail) {
     private fun handleFriendState() {
         with(binding.layoutDetail.layoutCtaFriend) {
             btnEndFriendship.setOnClickListener {
-                viewModel.onRemoveFriend()
+                showRemoveFriendDialog()
             }
         }
     }
 
     private fun handleIncomingState(username: String) {
         with(binding.layoutDetail.layoutCtaIncomingRequest) {
-            lblSubtitle.text = "$username has sent you a friend request"
-            btnAcceptRequest.setOnClickListener { viewModel.acceptFriendRequest() }
-            btnRejectRequest.setOnClickListener { viewModel.rejectFriendRequest() }
+            if (viewModel.hasRequestId) {
+                lblSubtitle.text = "$username has sent you a friend request"
+                btnAcceptRequest.setOnClickListener { viewModel.acceptFriendRequest() }
+                btnRejectRequest.setOnClickListener { viewModel.rejectFriendRequest() }
+            } else {
+                lblSubtitle.text = "$username has sent you a friend request, find it in friend request page!"
+                btnAcceptRequest.isVisible = false
+                btnRejectRequest.isVisible = false
+            }
         }
+    }
+
+    private fun showRemoveFriendDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .apply {
+                setTitle("Remove Friend")
+                setMessage("Are you sure you want to remove this account from your friendlist?")
+                setPositiveButton("Yes") { _, _ ->
+                    viewModel.onRemoveFriend()
+                }
+                setNegativeButton("Cancel") { _, _ ->
+                    // do nothing
+                }
+            }.show()
     }
 }

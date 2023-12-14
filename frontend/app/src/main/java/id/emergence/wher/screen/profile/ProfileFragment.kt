@@ -1,6 +1,7 @@
 package id.emergence.wher.screen.profile
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import android.widget.ImageView
 import androidx.core.view.isVisible
@@ -9,14 +10,16 @@ import androidx.lifecycle.lifecycleScope
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.Tab
 import id.emergence.wher.R
 import id.emergence.wher.databinding.FragmentProfileBinding
 import id.emergence.wher.domain.model.User
-import id.emergence.wher.ext.hashEmail
 import id.emergence.wher.ext.navigateTo
 import id.emergence.wher.ext.snackbar
+import id.emergence.wher.ext.toast
+import id.emergence.wher.screen.profile.ProfileViewModel.AccountDeletionSuccess
 import id.emergence.wher.screen.profile.ProfileViewModel.LogoutSuccess
 import id.emergence.wher.utils.base.OneTimeEvent
 import id.emergence.wher.utils.viewbinding.viewBinding
@@ -24,7 +27,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import logcat.logcat
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,6 +42,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             .onEach { event ->
                 when (event) {
                     LogoutSuccess -> {
+                        toast("Logged out!")
+                        navigateTo(ProfileFragmentDirections.actionProfileToSplash())
+                    }
+                    AccountDeletionSuccess -> {
+                        toggleLoading(false)
+                        toast("Delete account success!")
                         navigateTo(ProfileFragmentDirections.actionProfileToSplash())
                     }
                     OneTimeEvent.Loading -> {
@@ -61,17 +69,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+        postponeEnterTransition()
+
         with(binding) {
+            startPostponedEnterTransition()
             val tabProfile = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabProfile.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_profile)
             val tabFriends = layoutInflater.inflate(R.layout.view_custom_tab, null)
             tabFriends.findViewById<ImageView>(R.id.icon).setBackgroundResource(R.drawable.ic_friends)
 
-            tabLayout.addTab(
-                tabLayout.newTab().setCustomView(tabProfile).also {
-                    it.select()
-                },
-            )
+            tabLayout.addTab(tabLayout.newTab().setCustomView(tabProfile))
             tabLayout.addTab(tabLayout.newTab().setCustomView(tabFriends))
             tabLayout.addOnTabSelectedListener(
                 object : OnTabSelectedListener {
@@ -88,15 +97,33 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
 
                     override fun onTabReselected(tab: Tab?) {
+                        when (tab?.position) {
+                            1 -> navigateTo(ProfileFragmentDirections.actionProfileToFriendList())
+                            else -> {
+                                // do nothing
+                            }
+                        }
                     }
                 },
             )
 
+            btnEditProfile.setOnClickListener {
+                navigateTo(ProfileFragmentDirections.actionProfileToEdit())
+            }
+
             btnLogout.setOnClickListener {
                 viewModel.onLogout()
             }
+            btnDeleteAccount.setOnClickListener {
+                showDeleteAccountDialog()
+            }
         }
         profileObserver()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchProfile()
     }
 
     private fun profileObserver() =
@@ -116,29 +143,35 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             tvEmail.text = data.email
             tvUsername.text = data.username
             tvDisplayName.text = data.name
-            val imgUrl = if(data.photoUrl.isNotEmpty()) {
-                data.photoUrl
-            }else if(data.email.isNotEmpty()) {
-                hashEmail(data.email)
-            }else {
-                "https://placekitten.com/144/144"
-            }
 
             ivAvatar.apply {
                 val imgData =
                     ImageRequest
                         .Builder(requireContext())
-                        .data(imgUrl)
+                        .data(data.imgUrl)
                         .target(this)
                         .allowHardware(true)
                         .transformations(
                             listOf(
                                 CircleCropTransformation(),
                             ),
-                        )
-                        .build()
+                        ).build()
                 imageLoader.enqueue(imgData)
             }
         }
+    }
+
+    private fun showDeleteAccountDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .apply {
+                setTitle("Delete Account")
+                setMessage("Account deletion is a one way ticket. Are you sure you want to delete this account?")
+                setPositiveButton("Yes") { _, _ ->
+                    viewModel.deleteAccount()
+                }
+                setNegativeButton("Cancel") { _, _ ->
+                    // do nothing
+                }
+            }.show()
     }
 }

@@ -10,6 +10,7 @@ import {
 } from '../../../entity/FriendRequest.entity';
 import {
   checkFriendRequest,
+  deleteFriendRequest,
   upsertFriendRequest,
 } from '../../../data-repository/FriendRequest.data';
 import { getFriendship } from '../../../data-repository/UserFriend.data';
@@ -21,7 +22,16 @@ export async function friendRequestLogic(data: FriendRequestInterface) {
   }
 
   const friendRequest = await checkFriendRequest(target.id, data.user.id);
-  if (friendRequest) {
+
+  if (data.cancel) {
+    if (friendRequest) {
+      return await deleteFriendRequest(friendRequest.id);
+    } else {
+      throw new BadRequestError('Not Requested Yet!');
+    }
+  }
+
+  if (!data.cancel && friendRequest) {
     throw new BadRequestError('Already Requested!');
   }
 

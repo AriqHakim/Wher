@@ -13,7 +13,7 @@ import id.emergence.wher.R
 import id.emergence.wher.databinding.FragmentFriendRequestBinding
 import id.emergence.wher.ext.navigateTo
 import id.emergence.wher.ext.snackbar
-import id.emergence.wher.utils.adapter.UserPagingAdapter
+import id.emergence.wher.utils.adapter.FriendRequestPagingAdapter
 import id.emergence.wher.utils.viewbinding.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -27,7 +27,7 @@ class FriendRequestFragment : Fragment(R.layout.fragment_friend_request) {
     private val viewModel by viewModel<FriendRequestViewModel>()
     private val imageLoader by inject<ImageLoader>()
 
-    private lateinit var userAdapter: UserPagingAdapter
+    private lateinit var friendRequestAdapter: FriendRequestPagingAdapter
 
     override fun onViewCreated(
         view: View,
@@ -37,14 +37,14 @@ class FriendRequestFragment : Fragment(R.layout.fragment_friend_request) {
 
         with(binding) {
             btnBack.setOnClickListener { findNavController().popBackStack() }
-            userAdapter =
-                UserPagingAdapter(imageLoader) { user ->
+            friendRequestAdapter =
+                FriendRequestPagingAdapter(imageLoader) { request ->
                     navigateTo(
-                        FriendRequestFragmentDirections.actionFriendRequestToDetail(user.id),
+                        FriendRequestFragmentDirections.actionFriendRequestToDetail(request.requester.id, request.id),
                     )
                 }
             recyclerView.apply {
-                adapter = userAdapter
+                adapter = friendRequestAdapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
         }
@@ -55,19 +55,19 @@ class FriendRequestFragment : Fragment(R.layout.fragment_friend_request) {
 
     private fun observeResult() =
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.requests.collectLatest(userAdapter::submitData)
+            viewModel.requests.collectLatest(friendRequestAdapter::submitData)
         }
 
     private fun observeAdapter() =
         viewLifecycleOwner.lifecycleScope.launch {
-            userAdapter
+            friendRequestAdapter
                 .loadStateFlow
                 .map { it.refresh }
                 .distinctUntilChanged()
                 .collect {
                     if (it is LoadState.NotLoading) {
                         toggleLoading(false)
-                        if (userAdapter.itemCount < 1) {
+                        if (friendRequestAdapter.itemCount < 1) {
                             toggleEmptyLayout(true)
                         } else {
                             toggleEmptyLayout(false)
